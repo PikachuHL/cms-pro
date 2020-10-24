@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>cn.hellopika</groupId>
+    <artifactId>cms_pro</artifactId>
+    <packaging>pom</packaging>
+    <version>1.0-SNAPSHOT</version>
+    <modules>
+        <module>cms_portal</module>
+        <module>cms_service</module>
+        <module>cms_dao</module>
+        <module>cms_context</module>
+        <module>cms_core</module>
+    </modules>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <maven.compiler.encoding>UTF-8</maven.compiler.encoding>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <!-- 版本锁定 -->
+        <springVersion>4.3.20.RELEASE</springVersion>
+        <mybatisVersion>3.4.1</mybatisVersion>
+        <mybatisSpringVersion>1.3.0</mybatisSpringVersion>
+        <mybatisTypehanldersJsr310Version>1.0.1</mybatisTypehanldersJsr310Version>
+        <servletVersion>9.0.4</servletVersion>
+        <aspectjweaverVersion>1.7.3</aspectjweaverVersion>
+        <mysqlVersion>5.1.46</mysqlVersion>
+        <druidVersion>1.0.7</druidVersion>
+
+        <log4jVersion>1.2.17</log4jVersion>
+        <logbackVersion>1.1.2</logbackVersion>
+        <guavaVersion>20.0</guavaVersion>
+        <commonsLang3Version>3.5</commonsLang3Version>
+        <jodaTimeVersion>2.3</jodaTimeVersion>
+        <hashidsVersion>1.0.1</hashidsVersion>
+        <commonsNetVersion>3.1</commonsNetVersion>
+        <commonsFileupload>1.3.3</commonsFileupload>
+        <commonsIoVersion>2.0.1</commonsIoVersion>
+        <pagehelperVersion>4.2.1</pagehelperVersion>
+        <mybatispaginatorVersion>1.2.17</mybatispaginatorVersion>
+        <jsqlparserVersion>0.9.4</jsqlparserVersion>
+        <commonsCodec>1.10</commonsCodec>
+        <commonsLangVersion>2.6</commonsLangVersion>
+        <commonsLoggingVersion>1.1.1</commonsLoggingVersion>
+        <zxingVersion>2.1</zxingVersion>
+        <gsonVersion>2.3.1</gsonVersion>
+        <hamcrestCoreVersion>1.3</hamcrestCoreVersion>
+        <jedisVersion>2.9.0</jedisVersion>
+        <flywayVersion>4.1.0</flywayVersion>
+        <lombokVersion>1.16.20</lombokVersion>
+        <validatorVersion>5.4.0.Final</validatorVersion>
+        <mapstructVersion>1.2.0.Final</mapstructVersion>
+        <kapchaVersion>2.3.2</kapchaVersion>
+        <shiroVersion>1.3.2</shiroVersion>
+        <freemarkerVersion>2.3.23</freemarkerVersion>
+        <fastjsonVersion>1.2.55</fastjsonVersion>
+        <ehcacheCoreVersion>2.6.6</ehcacheCoreVersion>
+        <mabatisEhcacheVersion>1.1.0</mabatisEhcacheVersion>
+        <luceneVersion>4.6.1</luceneVersion>
+        <fasterxmlUuidVersion>3.1.4</fasterxmlUuidVersion>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.apache.tomcat</groupId>
+            <artifactId>tomcat-servlet-api</artifactId>
+            <version>${servletVersion}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-webmvc</artifactId>
+            <version>${springVersion}</version>
+        </dependency>
+        <!-- POJO 和 XML 之间互相转换 -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-oxm</artifactId>
+            <version>${springVersion}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-jdbc</artifactId>
+            <version>${springVersion}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-aspects</artifactId>
+            <version>${springVersion}</version>
+        </dependency>
+        <!-- 包含支持缓存, JCA, JMX, 邮件服务, 任务计划 -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context-support</artifactId>
+            <version>${springVersion}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-tx</artifactId>
+            <version>${springVersion}</version>
+        </dependency>
+        <!-- AOP -->
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjweaver</artifactId>
+            <version>${aspectjweaverVersion}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.mybatis</groupId>
+            <artifactId>mybatis-spring</artifactId>
+            <version>${mybatisSpringVersion}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.mybatis</groupId>
+            <artifactId>mybatis</artifactId>
+            <version>${mybatisVersion}</version>
+        </dependency>
+        <!-- Mybatis支持JSR310标准 -->
+        <dependency>
+            <groupId>org.mybatis</groupId>
+            <artifactId>mybatis-typehandlers-jsr310</artifactId>
+            <version>${mybatisTypehanldersJsr310Version}</version>
+        </dependency>
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>${mysqlVersion}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid</artifactId>
+            <version>${druidVersion}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>${log4jVersion}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.freemarker</groupId>
+            <artifactId>freemarker</artifactId>
+            <version>${freemarkerVersion}</version>
+        </dependency>
+
+    </dependencies>
+</project>
