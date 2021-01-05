@@ -31,5 +31,8 @@
         <property name="fileEncoding" value="utf-8"/>
     </bean>
 
-    <import resource="classpath:aplicationContext-datasource.xml"/>
+    <import resource="classpath:applicationContext-datasource.xml"/>
+    <import resource="classpath:applicationContext-redis.xml"/>
+    <import resource="classpath:applicationContext-configuration.xml"/>
+    <import resource="classpath:applicationContext-shiro.xml"/>
 </beans>

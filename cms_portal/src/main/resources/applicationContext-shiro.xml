@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:cache="http://www.springframework.org/schema/cache"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache.xsd">
+    <!--配置realm-->
+    <bean id="usernamePasswordCaptchaRealm" class="cn.hellopika.portal.security.realm.UsernamePasswordCaptchaRealm">
+        <property name="credentialsMatcher">
+            <bean class="org.apache.shiro.authc.credential.HashedCredentialsMatcher">
+                <!--配置加密方式-->
+                <property name="hashAlgorithmName" value="SHA-256"/>
+                <!--散列迭代次数-->
+                <property name="hashIterations" value="1024"/>
+                <!--表示是否存储散列后的密码为16进制，需要和生成密码时的一样，默认是base64-->
+                <!--此处最需要注意的就是HashedCredentialsMatcher的算法需要和生成密码时的算法一样。
+                另外HashedCredentialsMatcher会自动根据AuthenticationInfo的类型是否是SaltedAuthenticationInfo来获取credentialsSalt盐-->
+                <property name="storedCredentialsHexEncoded" value="true"/>
+            </bean>
+        </property>
+        <property name="authorizationCachingEnabled" value="true"/>
+        <property name="authorizationCacheName" value="authorizationCache"/>
+    </bean>
+
+    <!-- 缓存管理器 -->
+    <bean id="shiroCacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager">
+        <property name="cacheManager" ref="cacheManager"/>
+    </bean>
+
+    <!--安全管理器-->
+    <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+        <!--将自定义realm注入到securityManager-->
+        <property name="realm" ref="usernamePasswordCaptchaRealm"/>
+        <property name="cacheManager" ref="shiroCacheManager"/>
+    </bean>
+
+    <!-- 开启spring缓存区别于shiro的缓存 -->
+    <cache:annotation-driven cache-manager="springCacheManager"/>
+    <bean id="springCacheManager" class="org.springframework.cache.ehcache.EhCacheCacheManager">
+        <property name="cacheManager" ref="cacheManager"/>
+    </bean>
+    <bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
+        <property name="configLocation" value="classpath:ehcache.xml"/>
+        <property name="shared" value="true"/>
+    </bean>
+
+    <!--生命周期处理-->
+    <bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor"/>
+
+    <!--自定义authc登陆认证拦截器-->
+    <bean id="cmsAuthenticationFilter" class="cn.hellopika.portal.security.filter.CmsAuthenticationFilter"/>
+
+    <!--自定义user用户已登录拦截器-->
+    <bean id="cmsUserFilter" class="cn.hellopika.portal.security.filter.CmsUserFilter">
+        <property name="adminLoginUrl" value="/admin/cms/login.do"/>
+        <property name="adminPrefix" value="/admin/cms/"/>
+    </bean>
+
+    <!--shiro拦截器-->
+    <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+        <!--注入安全管理器-->
+        <property name="securityManager" ref="securityManager"/>
+        <!--登录链接-->
+        <property name="loginUrl" value="/login.jspx"/>
+        <!--成功登录链接-->
+        <property name="successUrl" value="/"/>
+        <!--自定义filter-->
+        <property name="filters">
+            <map>
+                <entry key="authc" value-ref="cmsAuthenticationFilter"/>
+                <entry key="user" value-ref="cmsUserFilter"/>
+            </map>
+        </property>
+        <!--过滤链定义 anon匿名 authc登录认证  user用户已登录 logout退出filter-->
+        <property name="filterChainDefinitions">
+            <value>
+                /login.jspx = authc
+                **.jspx = anon
+                **.jhtml = anon
+                /member/** = user
+                /admin/cms/captcha.do = anon
+                /admin/cms/login/captcha.do = anon
+                /admin/cms/content/** = anon
+                /admin/cms/error.do = anon
+                /admin/cms/login.do = authc
+                /admin/cms/logout.do = logout
+                /admin/cms/** = user
+            </value>
+        </property>
+    </bean>
+</beans>

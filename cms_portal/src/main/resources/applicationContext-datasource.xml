@@ -62,4 +62,11 @@
         <property name="logSlowSql" value="true"/>
     </bean>
 
+    <!--配置flyway-->
+    <bean id="flyway" class="org.flywaydb.core.Flyway" init-method="migrate" depends-on="dataSource">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="locations" value="migration"/>
+        <property name="baselineOnMigrate" value="true"/>
+    </bean>
+
 </beans>
