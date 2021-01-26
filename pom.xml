@@ -227,5 +227,12 @@
             <version>${commonsLang3Version}</version>
         </dependency>
 
+        <!-- fastjson -->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>${fastjsonVersion}</version>
+        </dependency>
+
     </dependencies>
 </project>
