@@ -17,7 +17,6 @@ public class CmsAuthenticationFilter extends FormAuthenticationFilter {
 
     @Override
     protected boolean executeLogin(ServletRequest request, ServletResponse response) throws Exception {
-        Thread.sleep(3000);
         // 设置字符编码
         response.setCharacterEncoding("utf-8");
         // 设置响应体数据类型
