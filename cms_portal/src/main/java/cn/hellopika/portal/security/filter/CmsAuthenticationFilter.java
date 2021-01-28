@@ -3,6 +3,10 @@ package cn.hellopika.portal.security.filter;
 import cn.hellopika.context.foundation.Result;
 import cn.hellopika.service.api.CommonService;
 import com.alibaba.fastjson.JSON;
+import org.apache.shiro.authc.AuthenticationToken;
+import org.apache.shiro.authc.IncorrectCredentialsException;
+import org.apache.shiro.authc.UnknownAccountException;
+import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.filter.authc.FormAuthenticationFilter;
 import org.apache.shiro.web.util.WebUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +42,19 @@ public class CmsAuthenticationFilter extends FormAuthenticationFilter {
             return false;
         }
 
-        response.getWriter().write(JSON.toJSONString(Result.success("登录成功")));
+        // 执行登录
+        AuthenticationToken token = this.createToken(request,response);
+        Subject subject = this.getSubject(request, response);
+        try{
+            subject.login(token);
+            response.getWriter().write(JSON.toJSONString(Result.success("登录成功")));
+        }catch (UnknownAccountException e){
+            response.getWriter().write(JSON.toJSONString(Result.failed("用户未注册")));
+        }catch (IncorrectCredentialsException e){
+            response.getWriter().write(JSON.toJSONString(Result.failed("用户名或密码错误")));
+        }
+
+
         return false;
     }
 }

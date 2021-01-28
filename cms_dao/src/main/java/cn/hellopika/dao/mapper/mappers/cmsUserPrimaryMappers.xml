@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="cn.hellopika.dao.mapper.CmsUserPrimaryMapper">
+    <sql id="baseColumns">
+        id,
+        username,
+        password,
+        salt,
+        email
+    </sql>
+
+    <resultMap id="baseResultMap" type="cn.hellopika.dao.entity.CmsUserPrimaryEntity">
+        <id property="id" column="id"/>
+        <result property="username" column="username"/>
+        <result property="password" column="password"/>
+        <result property="salt" column="salt"/>
+        <result property="email" column="email"/>
+    </resultMap>
+
+
+    <select id="findByUsername" resultMap="baseResultMap">
+        select <include refid="baseColumns"/> from cms_user_primary where username=#{username}
+    </select>
+
+</mapper>
