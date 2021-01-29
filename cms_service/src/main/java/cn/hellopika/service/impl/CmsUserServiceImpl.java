@@ -1,10 +1,10 @@
 package cn.hellopika.service.impl;
 
-import cn.hellopika.dao.entity.CmsUserPrimaryEntity;
-import cn.hellopika.dao.mapper.CmsUserPrimaryMapper;
+import cn.hellopika.dao.entity.CmsUserEntity;
+import cn.hellopika.dao.mapper.CmsUserMapper;
 import cn.hellopika.service.api.CmsUserService;
-import cn.hellopika.service.converter.CmsUserPrimaryConverter;
-import cn.hellopika.service.dto.CmsUserPrimaryDto;
+import cn.hellopika.service.converter.CmsUserConverter;
+import cn.hellopika.service.dto.CmsUserDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,15 +12,15 @@ import org.springframework.stereotype.Service;
 public class CmsUserServiceImpl implements CmsUserService {
 
     @Autowired
-    private CmsUserPrimaryMapper cmsUserPrimaryMapper;
+    private CmsUserMapper cmsUserMapper;
 
     @Override
-    public CmsUserPrimaryDto findByUsername(String username) {
+    public CmsUserDto findByUsername(String username) {
 
-        CmsUserPrimaryEntity cmsUserPrimaryEntity = cmsUserPrimaryMapper.findByUsername(username);
+        CmsUserEntity cmsUserEntity = cmsUserMapper.findByUsername(username);
         // 把 entity 转换成 dto
-        CmsUserPrimaryDto cmsUserPrimaryDto = CmsUserPrimaryConverter.CONVERTER.entityToDto(cmsUserPrimaryEntity);
+        CmsUserDto cmsUserDto = CmsUserConverter.CONVERTER.entityToDto(cmsUserEntity);
 
-        return cmsUserPrimaryDto;
+        return cmsUserDto;
     }
 }

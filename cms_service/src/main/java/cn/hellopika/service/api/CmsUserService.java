@@ -1,8 +1,8 @@
 package cn.hellopika.service.api;
 
-import cn.hellopika.service.dto.CmsUserPrimaryDto;
+import cn.hellopika.service.dto.CmsUserDto;
 
 public interface CmsUserService {
 
-    CmsUserPrimaryDto findByUsername(String username);
+    CmsUserDto findByUsername(String username);
 }

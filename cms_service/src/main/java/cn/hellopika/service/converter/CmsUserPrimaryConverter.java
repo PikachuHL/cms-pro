@@ -13,5 +13,21 @@ import org.mapstruct.factory.Mappers;
 public interface CmsUserPrimaryConverter {
     CmsUserPrimaryConverter CONVERTER = Mappers.getMapper(CmsUserPrimaryConverter.class);
 
+    /**
+     * entity 转换为 dto
+     *
+     * @param entity
+     * @return
+     */
     CmsUserPrimaryDto entityToDto(CmsUserPrimaryEntity entity);
+
+    /**
+     * dto 转换为 entity
+     *
+     * @param dto
+     * @return
+     */
+    CmsUserPrimaryEntity dtoToEntity(CmsUserPrimaryDto dto);
+
+
 }
