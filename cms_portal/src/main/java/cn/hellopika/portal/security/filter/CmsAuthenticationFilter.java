@@ -29,6 +29,7 @@ public class CmsAuthenticationFilter extends FormAuthenticationFilter {
 
     @Override
     protected boolean executeLogin(ServletRequest request, ServletResponse response) throws Exception {
+
         // 设置字符编码
         response.setCharacterEncoding("utf-8");
         // 设置响应体数据类型
@@ -49,7 +50,7 @@ public class CmsAuthenticationFilter extends FormAuthenticationFilter {
             subject.login(token);
             response.getWriter().write(JSON.toJSONString(Result.success("登录成功")));
         }catch (UnknownAccountException e){
-            response.getWriter().write(JSON.toJSONString(Result.failed("用户未注册")));
+            response.getWriter().write(JSON.toJSONString(Result.failed("用户不存在")));
         }catch (IncorrectCredentialsException e){
             response.getWriter().write(JSON.toJSONString(Result.failed("用户名或密码错误")));
         }

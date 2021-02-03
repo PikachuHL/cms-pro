@@ -12,5 +12,5 @@ public class CmsUserEntity {
     private LocalDateTime updateTime;
     private Integer id;
     private String username;
-    private Boolean status;
+    private Integer status;
 }

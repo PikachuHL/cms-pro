@@ -15,9 +15,9 @@ public class CmsUserPrimaryServiceImpl implements CmsUserPrimaryService {
     private CmsUserPrimaryMapper cmsUserPrimaryMapper;
 
     @Override
-    public CmsUserPrimaryDto findByUsername(String username) {
+    public CmsUserPrimaryDto getById(int id) {
 
-        CmsUserPrimaryEntity cmsUserPrimaryEntity = cmsUserPrimaryMapper.findByUsername(username);
+        CmsUserPrimaryEntity cmsUserPrimaryEntity = cmsUserPrimaryMapper.getById(id);
         // 把 entity 转换成 dto
         CmsUserPrimaryDto cmsUserPrimaryDto = CmsUserPrimaryConverter.CONVERTER.entityToDto(cmsUserPrimaryEntity);
 

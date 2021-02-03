@@ -22,8 +22,8 @@
     </resultMap>
 
 
-    <select id="findByUsername" resultMap="baseResultMap">
-        select <include refid="baseColumns"/> from cms_user_primary where username=#{username}
+    <select id="getById" resultMap="baseResultMap">
+        select <include refid="baseColumns"/> from cms_user_primary where id=#{id}
     </select>
 
 </mapper>

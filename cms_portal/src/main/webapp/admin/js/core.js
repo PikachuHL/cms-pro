@@ -37,8 +37,6 @@ const  CONSTANT = {
       ERROR:500
   }
 
-
-
 };
 
 

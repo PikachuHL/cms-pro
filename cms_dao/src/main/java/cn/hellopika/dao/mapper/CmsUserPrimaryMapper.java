@@ -5,6 +5,6 @@ import cn.hellopika.dao.entity.CmsUserPrimaryEntity;
 
 public interface CmsUserPrimaryMapper {
 
-    CmsUserPrimaryEntity findByUsername(String username);
+    CmsUserPrimaryEntity getById(int id);
 
 }

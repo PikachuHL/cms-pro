@@ -1,5 +1,6 @@
 package cn.hellopika.service.dto;
 
+import cn.hellopika.dao.enums.UserStatusEnum;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,5 +13,5 @@ public class CmsUserDto {
     private LocalDateTime updateTime;
     private Integer id;
     private String username;
-    private Boolean status;
+    private UserStatusEnum status;
 }

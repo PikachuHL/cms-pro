@@ -4,5 +4,5 @@ import cn.hellopika.service.dto.CmsUserPrimaryDto;
 
 public interface CmsUserPrimaryService {
 
-    CmsUserPrimaryDto findByUsername(String username);
+    CmsUserPrimaryDto getById(int id);
 }
