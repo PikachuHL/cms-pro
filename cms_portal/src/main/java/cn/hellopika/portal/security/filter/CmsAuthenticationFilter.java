@@ -1,6 +1,7 @@
 package cn.hellopika.portal.security.filter;
 
 import cn.hellopika.context.foundation.Result;
+import cn.hellopika.context.utils.UtilsShiro;
 import cn.hellopika.service.api.CommonService;
 import com.alibaba.fastjson.JSON;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -27,6 +28,13 @@ public class CmsAuthenticationFilter extends FormAuthenticationFilter {
                 this.pathsMatch("/admin/cms/login.do", request);
     }
 
+    /**
+     * 执行登录
+     * @param request
+     * @param response
+     * @return
+     * @throws Exception
+     */
     @Override
     protected boolean executeLogin(ServletRequest request, ServletResponse response) throws Exception {
 
@@ -45,7 +53,7 @@ public class CmsAuthenticationFilter extends FormAuthenticationFilter {
 
         // 执行登录
         AuthenticationToken token = this.createToken(request,response);
-        Subject subject = this.getSubject(request, response);
+        Subject subject = UtilsShiro.getSubject();
         try{
             subject.login(token);
             response.getWriter().write(JSON.toJSONString(Result.success("登录成功")));

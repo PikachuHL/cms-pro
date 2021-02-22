@@ -5,6 +5,9 @@ import lombok.Setter;
 
 import java.time.LocalDateTime;
 
+/**
+ * 用户主表的 entity
+ */
 @Getter
 @Setter
 public class CmsUserPrimaryEntity {

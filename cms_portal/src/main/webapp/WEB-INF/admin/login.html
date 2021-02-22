@@ -161,6 +161,7 @@
     //     });
     // });
 
+    // TODO 添加默认输入焦点在用户名框中
 
     LayUtil.form.init(function (inner, form) {
         inner.submit(function (data) {
@@ -172,6 +173,10 @@
         core.http({
             url: "${adminPath}/login.do",
             data: data
+        }, function (res) {
+            if (res.restCode === CONSTANT.HTTP.SUCCESS){
+                location.href = "${adminPath}/index.do"
+            }
         });
     }
 

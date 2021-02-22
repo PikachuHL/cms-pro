@@ -45,6 +45,7 @@ public class UsernamePasswordCaptchaRealm extends AuthorizingRealm {
             throw new LockedAccountException("用户被锁定, 请联系管理员");
         }
 
+        // 如果状态正常, 则从主表中通过 id 查找用户, 然后比对密码
         CmsUserPrimaryDto cmsUserPrimaryDto = cmsUserPrimaryService.getById(cmsUserDto.getId());
 
         SimpleAuthenticationInfo simpleAuthenticationInfo = new SimpleAuthenticationInfo(cmsUserDto, cmsUserPrimaryDto.getPassword(),
