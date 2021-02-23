@@ -9,6 +9,7 @@ import java.util.Objects;
  */
 public class UserStatusConverter {
 
+    // 把 Integer 转换成 UserStatusEnum
     public static UserStatusEnum toUserStatusEnum(Integer status) {
         for (UserStatusEnum userStatusEnum : UserStatusEnum.values()) {
             if (Objects.equals(userStatusEnum.getGrade(), status)) {
@@ -16,5 +17,10 @@ public class UserStatusConverter {
             }
         }
         return null;
+    }
+
+    // 把 UserStatusEnum 转换成 Integer
+    public static Integer toInteger(UserStatusEnum userStatusEnum) {
+        return (userStatusEnum != null) ? userStatusEnum.getGrade() : null;
     }
 }

@@ -56,6 +56,7 @@ public class CmsAuthenticationFilter extends FormAuthenticationFilter {
         Subject subject = UtilsShiro.getSubject();
         try{
             subject.login(token);
+
             response.getWriter().write(JSON.toJSONString(Result.success("登录成功")));
         }catch (UnknownAccountException e){
             response.getWriter().write(JSON.toJSONString(Result.failed("用户不存在")));

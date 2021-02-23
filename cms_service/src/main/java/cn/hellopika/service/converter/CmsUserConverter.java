@@ -29,7 +29,7 @@ public interface CmsUserConverter {
      * @param dto
      * @return
      */
-//    CmsUserEntity dtoToEntity(CmsUserDto dto);
+    CmsUserEntity dtoToEntity(CmsUserDto dto);
 
 
 }

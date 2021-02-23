@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.hellopika.dao.mapper.CmsLogMapper">
+    
+    <insert id="save">
+        <!--设置主键自增长-->
+        <selectKey order="AFTER" keyProperty="id" resultType="java.lang.Integer">
+            select last_insert_id()
+        </selectKey>
+
+        insert into cms_log (create_time, user_id, username, login_ip, url, content)
+        values (#{create_time}, #{user_id}, #{username}, #{login_ip}, #{url}, #{content})
+    </insert>
+    
+</mapper>

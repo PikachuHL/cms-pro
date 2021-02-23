@@ -1,19 +1,22 @@
 package cn.hellopika.dao.entity;
 
+import cn.hellopika.core.foundation.BaseEntity;
 import lombok.Getter;
 import lombok.Setter;
-
-import java.time.LocalDateTime;
 
 /**
  * 用户附表的 entity
  */
 @Getter
 @Setter
-public class CmsUserEntity {
-    private LocalDateTime createTime;
-    private LocalDateTime updateTime;
-    private Integer id;
+public class CmsUserEntity extends BaseEntity<Integer> {
     private String username;
     private Integer status;
+    private Boolean admin;
+    private String lastLoginIp;
+    private String sessionId;
+    /**
+     * 超级管理员
+     */
+    private Boolean administrator;
 }
