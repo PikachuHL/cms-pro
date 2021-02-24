@@ -17,9 +17,28 @@
         <result property="status" column="status"/>
     </resultMap>
 
-
     <select id="findByUsername" resultMap="baseResultMap">
         select <include refid="baseColumns"/> from cms_user where username=#{username} and deleted = 1
     </select>
+
+
+
+    <sql id="updateCondition">
+        update_time = #{updateTime}
+        <if test="lastLoginIp!=null and lastLoginIp!=''">
+            last_login_ip = #{lastLoginIp}
+        </if>
+        <if test="sessionId!=null and sessionId!=''">
+            session_id = #{sessionId}
+        </if>
+    </sql>
+
+    <update id="updateUser">
+        update cms_user
+        <trim prefix="set" suffixOverrides=",">
+            <include refid="updateCondition" />
+        </trim>
+        where id = #{id}
+    </update>
 
 </mapper>

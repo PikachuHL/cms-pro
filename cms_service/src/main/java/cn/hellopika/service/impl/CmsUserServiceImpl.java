@@ -23,4 +23,9 @@ public class CmsUserServiceImpl implements CmsUserService {
 
         return cmsUserDto;
     }
+
+    @Override
+    public void updateUser(CmsUserDto cmsUserDto) {
+        cmsUserMapper.updateUser(CmsUserConverter.CONVERTER.dtoToEntity(cmsUserDto));
+    }
 }

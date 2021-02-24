@@ -1,8 +1,13 @@
 package cn.hellopika.portal.security.filter;
 
 import cn.hellopika.context.foundation.Result;
+import cn.hellopika.context.utils.UtilsHttp;
 import cn.hellopika.context.utils.UtilsShiro;
+import cn.hellopika.service.api.CmsLogService;
+import cn.hellopika.service.api.CmsUserService;
 import cn.hellopika.service.api.CommonService;
+import cn.hellopika.service.dto.CmsLogDto;
+import cn.hellopika.service.dto.CmsUserDto;
 import com.alibaba.fastjson.JSON;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.IncorrectCredentialsException;
@@ -14,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
 import java.util.Objects;
 
 
@@ -21,6 +27,12 @@ public class CmsAuthenticationFilter extends FormAuthenticationFilter {
 
     @Autowired
     private CommonService commonService;
+
+    @Autowired
+    private CmsUserService cmsUserService;
+
+    @Autowired
+    private CmsLogService cmsLogService;
 
     @Override
     protected boolean isLoginRequest(ServletRequest request, ServletResponse response) {
@@ -73,8 +85,34 @@ public class CmsAuthenticationFilter extends FormAuthenticationFilter {
 
     @Override
     protected boolean onLoginSuccess(AuthenticationToken token, Subject subject, ServletRequest request, ServletResponse response) throws Exception {
-        // TODO 完善登录日志
 
-        return super.onLoginSuccess(token, subject, request, response);
+        // 获取登录url
+        HttpServletRequest httpServletRequest = (HttpServletRequest) request;
+        String url = httpServletRequest.getRequestURI();
+
+        // 获取登录用户的信息
+        CmsUserDto cmsUserDto = (CmsUserDto)subject.getPrincipal();
+
+        // 获取登录ip
+        String loginIp = UtilsHttp.getRemoteAddress();
+
+        // 获取SessionId
+        String sessionId = (String)UtilsShiro.getSession().getId();
+
+        /**
+         * 更新cms_user表
+         */
+        cmsUserDto.setLastLoginIp(loginIp);
+        cmsUserDto.setSessionId(sessionId);
+        cmsUserService.updateUser(cmsUserDto);
+
+        /**
+         * 更新cms_log表
+         */
+        cmsLogService.save(CmsLogDto.setCmsLogDto(cmsUserDto.getId(), cmsUserDto.getUsername(),
+                loginIp, url, "用户后台登录成功"));
+
+
+        return false;
     }
 }
