@@ -57,6 +57,9 @@ public class CmsAuthenticationFilter extends FormAuthenticationFilter {
         try{
             subject.login(token);
 
+            // 登录成功后保存日志
+            onLoginSuccess(token, subject, request, response);
+
             response.getWriter().write(JSON.toJSONString(Result.success("登录成功")));
         }catch (UnknownAccountException e){
             response.getWriter().write(JSON.toJSONString(Result.failed("用户不存在")));
@@ -66,5 +69,12 @@ public class CmsAuthenticationFilter extends FormAuthenticationFilter {
 
 
         return false;
+    }
+
+    @Override
+    protected boolean onLoginSuccess(AuthenticationToken token, Subject subject, ServletRequest request, ServletResponse response) throws Exception {
+        // TODO 完善登录日志
+
+        return super.onLoginSuccess(token, subject, request, response);
     }
 }

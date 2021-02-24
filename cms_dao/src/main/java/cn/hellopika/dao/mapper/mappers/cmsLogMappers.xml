@@ -12,7 +12,7 @@
         </selectKey>
 
         insert into cms_log (create_time, user_id, username, login_ip, url, content)
-        values (#{create_time}, #{user_id}, #{username}, #{login_ip}, #{url}, #{content})
+        values (#{createTime}, #{userId}, #{username}, #{loginIp}, #{url}, #{content})
     </insert>
     
 </mapper>
