@@ -73,8 +73,8 @@
         <property name="filterChainDefinitions">
             <value>
                 /login.jspx = authc
-                **.jspx = anon
-                **.jhtml = anon
+                **.jspx = authc
+                **.shtml = anon
                 /member/** = user
                 /admin/cms/captcha.do = anon
                 /admin/cms/login/captcha.do = anon

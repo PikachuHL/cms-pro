@@ -19,7 +19,6 @@ import java.util.Properties;
 )
 public class BaseInterceptor implements Interceptor {
 
-
     @Override
     public Object intercept(Invocation invocation) throws Throwable {
         MappedStatement mappedStatement = (MappedStatement) invocation.getArgs()[0];

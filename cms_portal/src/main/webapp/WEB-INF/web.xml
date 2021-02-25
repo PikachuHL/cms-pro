@@ -21,7 +21,28 @@
     <listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
   </listener>
 
-  <!-- 配置前端控制器 -->
+  <!-- 配置 前台的 前端控制器 -->
+  <servlet>
+    <servlet-name>frontServlet</servlet-name>
+    <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+    <init-param>
+      <param-name>contextConfigLocation</param-name>
+      <param-value>classpath:servlet-front.xml</param-value>
+    </init-param>
+    <!-- 服务器启动的时候，让frontServlet对象创建 -->
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>frontServlet</servlet-name>
+    <url-pattern>*.shtml</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>frontServlet</servlet-name>
+    <url-pattern>*.jspx</url-pattern>
+  </servlet-mapping>
+
+
+  <!-- 配置 后台的 前端控制器 -->
   <servlet>
     <servlet-name>adminServlet</servlet-name>
     <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
@@ -30,7 +51,7 @@
       <param-value>classpath:servlet-admin.xml</param-value>
     </init-param>
     <!-- 服务器启动的时候，让adminServlet对象创建 -->
-    <load-on-startup>2</load-on-startup>
+    <load-on-startup>1</load-on-startup>
   </servlet>
   <servlet-mapping>
     <servlet-name>adminServlet</servlet-name>
