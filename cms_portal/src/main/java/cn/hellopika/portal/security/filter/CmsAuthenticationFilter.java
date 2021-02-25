@@ -16,6 +16,7 @@ import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.filter.authc.FormAuthenticationFilter;
 import org.apache.shiro.web.util.WebUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
@@ -35,6 +36,9 @@ public class CmsAuthenticationFilter extends FormAuthenticationFilter {
     @Autowired
     private CmsLogService cmsLogService;
 
+    @Autowired
+    private ThreadPoolTaskExecutor threadPoolTaskExecutor;
+
     @Override
     protected boolean isLoginRequest(ServletRequest request, ServletResponse response) {
         return this.pathsMatch(this.getLoginUrl(), request) ||
@@ -43,6 +47,7 @@ public class CmsAuthenticationFilter extends FormAuthenticationFilter {
 
     /**
      * 执行登录
+     *
      * @param request
      * @param response
      * @return
@@ -67,9 +72,9 @@ public class CmsAuthenticationFilter extends FormAuthenticationFilter {
         }
 
         // 执行登录
-        AuthenticationToken token = this.createToken(request,response);
+        AuthenticationToken token = this.createToken(request, response);
         Subject subject = UtilsShiro.getSubject();
-        try{
+        try {
             subject.login(token);
 
             // 登录成功后保存日志
@@ -77,9 +82,9 @@ public class CmsAuthenticationFilter extends FormAuthenticationFilter {
 
             writer.write(JSON.toJSONString(Result.success("登录成功")));
             writer.close();
-        }catch (UnknownAccountException e){
+        } catch (UnknownAccountException e) {
             writer.write(JSON.toJSONString(Result.failed("用户不存在")));
-        }catch (IncorrectCredentialsException e){
+        } catch (IncorrectCredentialsException e) {
             writer.write(JSON.toJSONString(Result.failed("用户名或密码错误")));
         }
 
@@ -93,29 +98,27 @@ public class CmsAuthenticationFilter extends FormAuthenticationFilter {
         // 获取登录url
         HttpServletRequest httpServletRequest = (HttpServletRequest) request;
         String url = httpServletRequest.getRequestURI();
-
-        // 获取登录用户的信息
-        CmsUserDto cmsUserDto = (CmsUserDto)subject.getPrincipal();
-
         // 获取登录ip
         String loginIp = UtilsHttp.getRemoteAddress();
-
         // 获取SessionId
-        String sessionId = (String)UtilsShiro.getSession().getId();
+        String sessionId = (String) UtilsShiro.getSession().getId();
+        // 获取登录用户的信息
+        CmsUserDto cmsUserDto = (CmsUserDto) subject.getPrincipal();
 
-        /**
-         * 更新cms_user表
-         */
-        cmsUserDto.setLastLoginIp(loginIp);
-        cmsUserDto.setSessionId(sessionId);
-        cmsUserService.updateUser(cmsUserDto);
-
-        /**
-         * 更新cms_log表
-         */
-        cmsLogService.save(CmsLogDto.setCmsLogDto(cmsUserDto.getId(), cmsUserDto.getUsername(),
-                loginIp, url, "用户后台登录成功"));
-
+        // 将写日志和更新用户附表放到线程池中, 提高性能
+        threadPoolTaskExecutor.execute(() -> {
+            /**
+             * 更新cms_user表
+             */
+            cmsUserDto.setLastLoginIp(loginIp);
+            cmsUserDto.setSessionId(sessionId);
+            cmsUserService.updateUser(cmsUserDto);
+            /**
+             * 更新cms_log表
+             */
+            cmsLogService.save(CmsLogDto.setCmsLogDto(cmsUserDto.getId(), cmsUserDto.getUsername(),
+                    loginIp, url, "用户后台登录成功"));
+        });
 
         return false;
     }
