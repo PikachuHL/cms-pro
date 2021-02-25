@@ -59,7 +59,7 @@
         <!--注入安全管理器-->
         <property name="securityManager" ref="securityManager"/>
         <!--登录链接-->
-        <property name="loginUrl" value="/login.jspx"/>
+        <property name="loginUrl" value="/admin/cms/login.do"/>
         <!--成功登录链接-->
         <property name="successUrl" value="/"/>
         <!--自定义filter-->
@@ -72,8 +72,7 @@
         <!--过滤链定义 anon匿名 authc登录认证  user用户已登录 logout退出filter-->
         <property name="filterChainDefinitions">
             <value>
-                /login.jspx = authc
-                **.jspx = authc
+                **.jspx = anon
                 **.shtml = anon
                 /member/** = user
                 /admin/cms/captcha.do = anon

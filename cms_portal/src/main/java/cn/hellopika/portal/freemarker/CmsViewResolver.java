@@ -13,7 +13,7 @@ public class CmsViewResolver extends FreeMarkerView {
         // 获取项目的根路径
         String contextPath = request.getContextPath();
 
-        //
+        // 获取servlet路径
         String servletPath = request.getServletPath();
         String requestURI = request.getRequestURI();
 
