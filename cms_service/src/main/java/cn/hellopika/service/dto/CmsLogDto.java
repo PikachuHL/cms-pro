@@ -17,7 +17,6 @@ public class CmsLogDto extends BaseDto<Integer> {
 
     public static CmsLogDto setCmsLogDto(Integer userId, String username, String loginIp, String url, String content){
         CmsLogDto cmsLogDto = new CmsLogDto();
-        cmsLogDto.setCreateTime(LocalDateTime.now());
         cmsLogDto.setUserId(userId);
         cmsLogDto.setUsername(username);
         cmsLogDto.setLoginIp(loginIp);

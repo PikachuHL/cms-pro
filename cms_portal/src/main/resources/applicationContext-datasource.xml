@@ -31,6 +31,12 @@
                 <property name="lazyLoadTriggerMethods" value=""/>
             </bean>
         </property>
+        <property name="plugins">
+            <array>
+                <bean id="baseInterceptor" class="cn.hellopika.context.interceptor.BaseInterceptor"/>
+            </array>
+        </property>
+
     </bean>
 
     <!-- 配置数据源 -->

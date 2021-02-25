@@ -20,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
+import java.io.PrintWriter;
 import java.util.Objects;
 
 
@@ -55,11 +56,13 @@ public class CmsAuthenticationFilter extends FormAuthenticationFilter {
         // 设置响应体数据类型
         response.setContentType("application/json;charset=UTF-8");
 
+        PrintWriter writer = response.getWriter();
+
         //获取验证码并执行验证
         String captcha = WebUtils.getCleanParam(request, "captcha");
         String verifyResult = commonService.verifyImageCaptcha(captcha);
         if (Objects.nonNull(verifyResult)) {
-            response.getWriter().write(JSON.toJSONString(Result.failed(verifyResult)));
+            writer.write(JSON.toJSONString(Result.failed(verifyResult)));
             return false;
         }
 
@@ -72,14 +75,15 @@ public class CmsAuthenticationFilter extends FormAuthenticationFilter {
             // 登录成功后保存日志
             onLoginSuccess(token, subject, request, response);
 
-            response.getWriter().write(JSON.toJSONString(Result.success("登录成功")));
+            writer.write(JSON.toJSONString(Result.success("登录成功")));
+            writer.close();
         }catch (UnknownAccountException e){
-            response.getWriter().write(JSON.toJSONString(Result.failed("用户不存在")));
+            writer.write(JSON.toJSONString(Result.failed("用户不存在")));
         }catch (IncorrectCredentialsException e){
-            response.getWriter().write(JSON.toJSONString(Result.failed("用户名或密码错误")));
+            writer.write(JSON.toJSONString(Result.failed("用户名或密码错误")));
         }
 
-
+        writer.close();
         return false;
     }
 
