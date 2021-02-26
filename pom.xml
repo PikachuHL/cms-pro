@@ -138,12 +138,7 @@
             <artifactId>druid</artifactId>
             <version>${druidVersion}</version>
         </dependency>
-
-        <dependency>
-            <groupId>log4j</groupId>
-            <artifactId>log4j</artifactId>
-            <version>${log4jVersion}</version>
-        </dependency>
+        
 
         <dependency>
             <groupId>org.freemarker</groupId>
