@@ -32,8 +32,7 @@
         <mysqlVersion>5.1.46</mysqlVersion>
         <druidVersion>1.0.7</druidVersion>
 
-        <log4jVersion>1.2.17</log4jVersion>
-        <logbackVersion>1.1.2</logbackVersion>
+        <logbackVersion>1.2.3</logbackVersion>
         <guavaVersion>20.0</guavaVersion>
         <commonsLang3Version>3.5</commonsLang3Version>
         <jodaTimeVersion>2.3</jodaTimeVersion>
@@ -138,7 +137,13 @@
             <artifactId>druid</artifactId>
             <version>${druidVersion}</version>
         </dependency>
-        
+
+        <!--logback-->
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>${logbackVersion}</version>
+        </dependency>
 
         <dependency>
             <groupId>org.freemarker</groupId>

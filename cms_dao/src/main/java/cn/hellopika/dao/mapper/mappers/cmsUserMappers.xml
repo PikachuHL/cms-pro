@@ -22,19 +22,19 @@
     </select>
 
 
-
     <sql id="updateCondition">
-        update_time = #{updateTime}
+        update_time = #{updateTime},
         <if test="lastLoginIp!=null and lastLoginIp!=''">
-            last_login_ip = #{lastLoginIp}
+            last_login_ip = #{lastLoginIp},
         </if>
         <if test="sessionId!=null and sessionId!=''">
-            session_id = #{sessionId}
+            session_id = #{sessionId},
         </if>
     </sql>
 
     <update id="updateUser">
         update cms_user
+        <!-- suffixOverrides="," : 去掉sql语句的最后一个逗号 -->
         <trim prefix="set" suffixOverrides=",">
             <include refid="updateCondition" />
         </trim>
