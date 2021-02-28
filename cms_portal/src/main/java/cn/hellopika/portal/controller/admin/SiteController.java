@@ -1,6 +1,7 @@
 package cn.hellopika.portal.controller.admin;
 
 import cn.hellopika.context.foundation.Result;
+import cn.hellopika.core.annotation.DoLog;
 import cn.hellopika.core.annotation.DoValid;
 import cn.hellopika.service.api.CmsSiteService;
 import cn.hellopika.service.dto.CmsSiteDto;
@@ -35,6 +36,7 @@ public class SiteController {
     @PostMapping("update.do")
     @ResponseBody
     @DoValid
+    @DoLog(content = "修改站点配置")
     public Result doUpdate(@Valid CmsSiteDto cmsSiteDto, BindingResult result){
         cmsSiteService.update(cmsSiteDto);
         return Result.success();

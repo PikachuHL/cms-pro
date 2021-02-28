@@ -9,6 +9,16 @@
         <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
     </context:component-scan>
 
+    <!--配置拦截器 -->
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/**"/>
+            <mvc:exclude-mapping path="/login.do"/>
+            <mvc:exclude-mapping path="/captcha.do"/>
+            <bean class="cn.hellopika.portal.interceptor.LogInterceptor"/>
+        </mvc:interceptor>
+    </mvc:interceptors>
+
 
     <!--引入公共的配置-->
     <import resource="classpath:servlet-common.xml"/>
