@@ -25,7 +25,17 @@ public class CmsUserServiceImpl implements CmsUserService {
     }
 
     @Override
-    public void updateUser(CmsUserDto cmsUserDto) {
-        cmsUserMapper.updateUser(CmsUserConverter.CONVERTER.dtoToEntity(cmsUserDto));
+    public void save(CmsUserDto dto) {
+
+    }
+
+    @Override
+    public void update(CmsUserDto cmsUserDto) {
+        cmsUserMapper.update(CmsUserConverter.CONVERTER.dtoToEntity(cmsUserDto));
+    }
+
+    @Override
+    public CmsUserDto selectById(int id) {
+        return null;
     }
 }

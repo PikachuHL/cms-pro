@@ -113,7 +113,7 @@ public class CmsAuthenticationFilter extends FormAuthenticationFilter {
              */
             cmsUserDto.setLastLoginIp(loginIp);
             cmsUserDto.setSessionId(sessionId);
-            cmsUserService.updateUser(cmsUserDto);
+            cmsUserService.update(cmsUserDto);
             /**
              * 更新cms_log表
              */

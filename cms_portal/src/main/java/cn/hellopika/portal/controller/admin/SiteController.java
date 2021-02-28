@@ -29,7 +29,7 @@ public class SiteController {
 
     @GetMapping("index.do")
     public String toIndex(Model model) {
-        model.addAttribute("data", cmsSiteService.getById(1));
+        model.addAttribute("data", cmsSiteService.selectById(1));
         return "admin/site/index";
     }
 

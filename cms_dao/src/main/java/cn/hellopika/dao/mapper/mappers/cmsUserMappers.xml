@@ -32,7 +32,7 @@
         </if>
     </sql>
 
-    <update id="updateUser">
+    <update id="update">
         update cms_user
         <!-- suffixOverrides="," : 去掉sql语句的最后一个逗号 -->
         <trim prefix="set" suffixOverrides=",">

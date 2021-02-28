@@ -1,9 +1,10 @@
 package cn.hellopika.dao.mapper;
 
 
+import cn.hellopika.core.foundation.BaseMapper;
 import cn.hellopika.dao.entity.CmsUserEntity;
 
-public interface CmsUserMapper {
+public interface CmsUserMapper extends BaseMapper<CmsUserEntity, Integer> {
 
     /**
      * 根据名称查询
@@ -11,11 +12,4 @@ public interface CmsUserMapper {
      * @return
      */
     CmsUserEntity findByUsername(String username);
-
-
-    /**
-     * 更新用户
-     * @param cmsUserEntity
-     */
-    void updateUser(CmsUserEntity cmsUserEntity);
 }

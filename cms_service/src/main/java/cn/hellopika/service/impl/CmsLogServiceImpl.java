@@ -20,4 +20,14 @@ public class CmsLogServiceImpl implements CmsLogService {
 
         cmsLogMapper.save(cmsLogEntity);
     }
+
+    @Override
+    public void update(CmsLogDto dto) {
+
+    }
+
+    @Override
+    public CmsLogDto selectById(int id) {
+        return null;
+    }
 }

@@ -1,10 +1,7 @@
 package cn.hellopika.service.api;
 
+import cn.hellopika.core.foundation.BaseService;
 import cn.hellopika.service.dto.CmsLogDto;
 
-public interface CmsLogService {
-    /**
-     * 保存日志
-     */
-    void save(CmsLogDto logDto);
+public interface CmsLogService extends BaseService<CmsLogDto, Integer> {
 }

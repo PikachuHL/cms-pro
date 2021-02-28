@@ -14,12 +14,17 @@ public class CmsSiteServiceImpl implements CmsSiteService {
     private CmsSiteMapper cmsSiteMapper;
 
     @Override
-    public CmsSiteDto getById(int id) {
-        return CmsSiteConverter.CONVERTER.entityToDto(cmsSiteMapper.getById(id));
+    public void save(CmsSiteDto dto) {
+
     }
 
     @Override
     public void update(CmsSiteDto cmsSiteDto) {
         cmsSiteMapper.update(CmsSiteConverter.CONVERTER.dtoToEntity(cmsSiteDto));
+    }
+
+    @Override
+    public CmsSiteDto selectById(int id) {
+        return CmsSiteConverter.CONVERTER.entityToDto(cmsSiteMapper.selectById(id));
     }
 }

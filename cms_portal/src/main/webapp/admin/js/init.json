@@ -50,10 +50,18 @@
           "target": "_self"
         },
         {
-          "title": "表格示例",
+          "title": "用户管理",
           "href": "page/table.html",
           "icon": "fa fa-file-text",
-          "target": "_self"
+          "target": "_self",
+          "child": [
+            {
+              "title": "权限管理",
+              "href": "page/form.html",
+              "icon": "fa fa-list-alt",
+              "target": "_self"
+            }
+          ]
         },
         {
           "title": "表单示例",

@@ -46,7 +46,7 @@ public class UsernamePasswordCaptchaRealm extends AuthorizingRealm {
         }
 
         // 如果状态正常, 则从主表中通过 id 查找用户, 然后比对密码
-        CmsUserPrimaryDto cmsUserPrimaryDto = cmsUserPrimaryService.getById(cmsUserDto.getId());
+        CmsUserPrimaryDto cmsUserPrimaryDto = cmsUserPrimaryService.selectById(cmsUserDto.getId());
 
         SimpleAuthenticationInfo simpleAuthenticationInfo = new SimpleAuthenticationInfo(cmsUserDto, cmsUserPrimaryDto.getPassword(),
                 ByteSource.Util.bytes(cmsUserPrimaryDto.getSalt()), getName());

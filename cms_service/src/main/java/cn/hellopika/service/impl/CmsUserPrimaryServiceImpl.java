@@ -15,9 +15,19 @@ public class CmsUserPrimaryServiceImpl implements CmsUserPrimaryService {
     private CmsUserPrimaryMapper cmsUserPrimaryMapper;
 
     @Override
-    public CmsUserPrimaryDto getById(int id) {
+    public void save(CmsUserPrimaryDto dto) {
 
-        CmsUserPrimaryEntity cmsUserPrimaryEntity = cmsUserPrimaryMapper.getById(id);
+    }
+
+    @Override
+    public void update(CmsUserPrimaryDto dto) {
+
+    }
+
+    @Override
+    public CmsUserPrimaryDto selectById(int id) {
+
+        CmsUserPrimaryEntity cmsUserPrimaryEntity = cmsUserPrimaryMapper.selectById(id);
         // 把 entity 转换成 dto
         CmsUserPrimaryDto cmsUserPrimaryDto = CmsUserPrimaryConverter.CONVERTER.entityToDto(cmsUserPrimaryEntity);
 

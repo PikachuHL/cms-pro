@@ -42,7 +42,7 @@
         where id = #{id}
     </update>
 
-    <select id="getById" resultMap="cmsSite">
+    <select id="selectById" resultMap="cmsSite">
         select <include refid="baseColumns" /> from cms_site where id=#{id}
     </select>
 

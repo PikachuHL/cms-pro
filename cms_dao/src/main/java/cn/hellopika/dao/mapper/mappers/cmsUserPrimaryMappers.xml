@@ -22,7 +22,7 @@
     </resultMap>
 
 
-    <select id="getById" resultMap="baseResultMap">
+    <select id="selectById" resultMap="baseResultMap">
         select <include refid="baseColumns"/> from cms_user_primary where id=#{id}
     </select>
 
