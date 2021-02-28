@@ -67,6 +67,25 @@ CREATE TABLE cms_log (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
+-- ----------------------------
+-- Table structure for cms_site  站点表
+-- ----------------------------
+CREATE TABLE cms_site
+(
+    create_time        timestamp                   not null default CURRENT_TIMESTAMP,
+    update_time        timestamp                   not null default '0000-00-00 00:00:00',
+    id                 int(11)                     NOT NULL AUTO_INCREMENT primary key,
+    site_name          varchar(100)                not null comment '网站名称',
+    keywords           varchar(255)                not null default '' comment '站点关键字',
+    description        varchar(255)                not null default '' comment '站点描述'
+) ENGINE = InnoDB
+  AUTO_INCREMENT = 2
+  DEFAULT CHARSET = utf8 comment ='CMS站点表';
+
+INSERT INTO cms_site (id, site_name, keywords, description)
+VALUES (1, 'cms官网','cms,内容管理', 'cms内容管理系统');
+
+
 
 
 

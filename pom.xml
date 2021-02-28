@@ -59,7 +59,7 @@
         <freemarkerVersion>2.3.23</freemarkerVersion>
         <fastjsonVersion>1.2.55</fastjsonVersion>
         <ehcacheCoreVersion>2.6.6</ehcacheCoreVersion>
-        <mabatisEhcacheVersion>1.1.0</mabatisEhcacheVersion>
+        <mybatisEhcacheVersion>1.1.0</mybatisEhcacheVersion>
         <luceneVersion>4.6.1</luceneVersion>
         <fasterxmlUuidVersion>3.1.4</fasterxmlUuidVersion>
     </properties>
@@ -120,6 +120,14 @@
             <artifactId>mybatis</artifactId>
             <version>${mybatisVersion}</version>
         </dependency>
+
+        <!--mybatis与ehcache整合-->
+        <dependency>
+            <groupId>org.mybatis.caches</groupId>
+            <artifactId>mybatis-ehcache</artifactId>
+            <version>${mybatisEhcacheVersion}</version>
+        </dependency>
+
         <!-- Mybatis支持JSR310标准 -->
         <dependency>
             <groupId>org.mybatis</groupId>
@@ -149,6 +157,13 @@
             <groupId>org.freemarker</groupId>
             <artifactId>freemarker</artifactId>
             <version>${freemarkerVersion}</version>
+        </dependency>
+
+        <!--hibernate validator-->
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-validator</artifactId>
+            <version>${validatorVersion}</version>
         </dependency>
 
         <!--flyway-->

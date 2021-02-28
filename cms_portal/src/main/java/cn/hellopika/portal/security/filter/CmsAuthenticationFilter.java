@@ -21,6 +21,7 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.PrintWriter;
 import java.util.Objects;
 
@@ -66,7 +67,7 @@ public class CmsAuthenticationFilter extends FormAuthenticationFilter {
         //获取验证码并执行验证
         String captcha = WebUtils.getCleanParam(request, "captcha");
         String verifyResult = commonService.verifyImageCaptcha(captcha);
-        if (Objects.nonNull(verifyResult)) {
+        if (1>2 && Objects.nonNull(verifyResult)) {
             writer.write(JSON.toJSONString(Result.failed(verifyResult)));
             return false;
         }

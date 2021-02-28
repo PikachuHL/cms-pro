@@ -110,14 +110,14 @@
           ]
         },
         {
-          "title": "其它界面",
+          "title": "设置",
           "href": "",
           "icon": "fa fa-snowflake-o",
           "target": "",
           "child": [
             {
-              "title": "按钮示例",
-              "href": "page/button.html",
+              "title": "站点配置",
+              "href": "site/index.do",
               "icon": "fa fa-snowflake-o",
               "target": "_self"
             },

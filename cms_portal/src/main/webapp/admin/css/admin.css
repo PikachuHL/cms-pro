@@ -1,0 +1,56 @@
+@media screen and (min-width: 1201px) and (max-width: 1366px) {
+    .cms-inline-50 {
+        width: 48%;
+    }
+
+    .cms-inline-50 .cms-inline-block {
+        min-width: 192px;
+        width: 57%;
+    }
+
+    .cms-inline-100 .cms-inline-block {
+        width: 76.4%;
+    }
+}
+
+@media screen and (min-width: 1367px) and (max-width: 1439px) {
+    .cms-inline-50 .cms-inline-block {
+        min-width: 192px;
+        width: 61%;
+    }
+    .cms-inline-100 .cms-inline-block {
+        width: 78.4%;
+    }
+}
+
+@media screen and (min-width: 1440px) and (max-width: 1600px) {
+    .cms-inline-50 .cms-inline-block {
+        min-width: 192px;
+        width: 61%;
+    }
+    .cms-inline-100 .cms-inline-block {
+        width: 78.2%;
+    }
+}
+
+@media screen and (min-width: 1601px) and (max-width: 1920px) {
+    .cms-inline-50 .cms-inline-block {
+        min-width: 192px;
+        width: 61%;
+    }
+    .cms-inline-100 .cms-inline-block {
+        width: 78.1%;
+    }
+}
+.layui-input-block{
+    margin-left: 0;
+}
+.cms-flex-end{
+    display:flex;
+    flex-direction: row;
+    align-content: flex-end;
+    justify-content: flex-end;
+}
+.cms-pt50{
+    padding-top: 30px;
+}

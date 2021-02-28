@@ -6,7 +6,7 @@
             <pattern>[%d{HH:mm:ss.SSS}][%p][%c{40}][%t] %m%n</pattern>
         </encoder>
         <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
-            <level>DEBUG</level>
+            <level>INFO</level>
         </filter>
     </appender>
     <!--文件-->
@@ -45,7 +45,7 @@
     </logger>
 
     <!--  mybatis log 日志 -->
-    <logger name="cn.hellopika.dao.mapper" level="DEBUG"/>
+    <logger name="cn.hellopika.dao.mapper" level="INFO"/>
 
     <root level="DEBUG">
         <appender-ref ref="console"/>

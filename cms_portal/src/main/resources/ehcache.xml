@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://ehcache.org/ehcache.xsd"
+<ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="http://ehcache.org/ehcache.xsd"
          updateCheck="false">
     <!--
            diskStore：为缓存路径，ehcache分为内存和磁盘两级，此属性定义磁盘的缓存位置。参数解释如下：
@@ -14,8 +15,8 @@
      -->
     <defaultCache
             maxElementsInMemory="10000"
-            timeToIdleSeconds="120"
-            timeToLiveSeconds="120"
+            timeToIdleSeconds="3600"
+            timeToLiveSeconds="3600"
             overflowToDisk="true"
             maxElementsOnDisk="10000000"
             diskPersistent="false"
@@ -24,17 +25,14 @@
     </defaultCache>
 
     <!--菜单缓存-->
-    <cache
-        name="permissionCache"
-        maxEntriesLocalHeap="10000"
-        maxEntriesLocalDisk="1000"
-        eternal="false"
-        diskSpoolBufferSizeMB="30"
-        timeToIdleSeconds="300"
-        timeToLiveSeconds="6000"
-        memoryStoreEvictionPolicy="LFU"
-        transactionalMode="off">
-</cache>
+    <cache name="permissionCache"
+           maxEntriesLocalHeap="10000"
+           maxEntriesLocalDisk="1000"
+           diskSpoolBufferSizeMB="30"
+           timeToIdleSeconds="300"
+           timeToLiveSeconds="6000"
+           memoryStoreEvictionPolicy="LFU">
+    </cache>
 
     <!--授权信息缓存-->
     <cache name="authorizationCache"

@@ -132,7 +132,7 @@
                 <div class="layui-form-item">
                     <label class="layui-icon layui-icon-vercode" for="captcha"></label>
                     <input type="text" name="captcha" lay-verify="required|captcha" placeholder="图形验证码"
-                           autocomplete="off" class="layui-input verification captcha">
+                           autocomplete="off" class="layui-input verification captcha" value="6666">
                     <div class="captcha-img" style="cursor: pointer">
                         <img id="captchaPic" src="${adminPath}/captcha.do"
                              onclick="this.src='${adminPath}/captcha.do?random=' + Math.random()">
@@ -142,7 +142,7 @@
                     <input type="checkbox" name="rememberMe" value="true" lay-skin="primary" title="记住密码">
                 </div>
                 <div class="layui-form-item">
-                    <button class="layui-btn layui-btn-fluid" lay-submit="" lay-filter="login">登 入</button>
+                    <button class="layui-btn layui-btn-fluid" lay-submit="" lay-filter="go">登 入</button>
                 </div>
             </form>
         </div>
@@ -161,21 +161,23 @@
         });
     });
 
-    // TODO 添加默认输入焦点在用户名框中
+    $('input[name="username"]').focus();
 
-    LayUtil.form.init(function (inner, form) {
-        inner.submit(function (data) {
-            core.throttle(submit, data.field);
+    LayUtil.form.init(function(inner,form){
+        inner.submit(function(data){
+            core.throttle(submit,data.field);
         })
     });
 
     function submit(data) {
         core.http({
-            url: "${adminPath}/login.do",
-            data: data
-        }, function (res) {
-            if (res.restCode === CONSTANT.HTTP.SUCCESS){
-                location.href = "${adminPath}/index.do"
+            url:"${adminPath}/login.do",
+            data:data
+        },function(res){
+            if(res.restCode===CONSTANT.HTTP.SUCCESS){
+                setTimeout(function(){
+                    location.href = "${adminPath}/index.do";
+                },600)
             }
         });
     }
