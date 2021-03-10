@@ -51,13 +51,13 @@
         },
         {
           "title": "用户管理",
-          "href": "page/table.html",
+          "href": "",
           "icon": "fa fa-file-text",
           "target": "_self",
           "child": [
             {
               "title": "权限管理",
-              "href": "page/form.html",
+              "href": "permission/index.do",
               "icon": "fa fa-list-alt",
               "target": "_self"
             }

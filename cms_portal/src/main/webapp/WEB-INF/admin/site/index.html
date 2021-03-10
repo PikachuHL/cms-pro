@@ -3,6 +3,7 @@
 <@main.layout>
     <@form.form>
         <input type="hidden" name="id" value="${data.id!""}">
+
         <@form.item>
             <@form.inline label="站点名称">
                 <input type="text" class="layui-input" name="siteName" lay-verify="required"  value="${data.siteName!""}">
@@ -11,11 +12,13 @@
                 <input type="text" class="layui-input" name="keywords" lay-verify="required" value="${data.keywords!""}">
             </@form.inline>
         </@form.item>
+
         <@form.item>
             <@form.inline label="站点描述">
                 <textarea type="text" class="layui-input layui-textarea" lay-verify="required" name="description">${data.description!""}</textarea>
             </@form.inline>
         </@form.item>
+
         <@form.submit></@form.submit>
     </@form.form>
 </@main.layout>
