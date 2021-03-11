@@ -1,0 +1,49 @@
+<#import "/layout/backend/main.ftl" as main >
+<#import "/layout/backend/form.ftl" as form >
+
+<@main.layout>
+    <@form.form>
+
+        <@form.item>
+            <@form.inline label="上级菜单">
+                <input name="parentId" class="layui-input" type="text">
+            </@form.inline>
+            <@form.inline label="权限名称" required=true>
+                <input name="name" class="layui-input" type="text">
+            </@form.inline>
+        </@form.item>
+
+        <@form.item>
+            <@form.inline label="权限类型" required=true>
+                <!-- permissionType为Controller中放到 model 里面的一个 attribute -->
+                <@form.radio list=permissionType name="menu" value="0"></@form.radio>
+            </@form.inline>
+            <@form.inline label="菜单url">
+                <input name="parentId" class="layui-input" type="text">
+            </@form.inline>
+        </@form.item>
+
+        <@form.item>
+            <@form.inline label="权限标识">
+                <input name="action" class="layui-input" type="text">
+            </@form.inline>
+            <@form.inline label="菜单图标">
+                <input name="icon" class="layui-input" type="text">
+            </@form.inline>
+        </@form.item>
+
+        <@form.item>
+            <@form.inline label="排序" required=true>
+                <input name="priority" class="layui-input" type="number">
+            </@form.inline>
+        </@form.item>
+
+        <@form.submit></@form.submit>
+    </@form.form>
+</@main.layout>
+
+<script>
+    LayUtil.form.init(function () {
+        
+    })
+</script>

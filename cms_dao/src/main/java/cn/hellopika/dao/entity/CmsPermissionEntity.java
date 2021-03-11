@@ -12,4 +12,6 @@ public class CmsPermissionEntity extends BaseEntity<Integer> {
     private String icon;
     private String name;
     private String action;
+    private String url;
+    private Integer priority;
 }

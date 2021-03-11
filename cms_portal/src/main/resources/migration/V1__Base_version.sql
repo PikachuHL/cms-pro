@@ -98,7 +98,10 @@ VALUES (1, 'cms官网','cms,内容管理', 'cms内容管理系统');
     is_menu     tinyint(1)   default 0 comment '是否菜单 0:否 1:是',
     icon        varchar(30)  default '' comment '菜单图标',
     name varchar(25) not null comment '权限名称',
-    action      varchar(100)  default '' comment '权限码'
+    action      varchar(100)  default '' comment '权限码',
+    url         varchar(100)  NOT NULL comment '权限链接url',
+    priority    int(11) not null comment '排序'
+
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8;
 
