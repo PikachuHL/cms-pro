@@ -42,7 +42,7 @@
     </div>
 </#macro>
 
-
+<#--单选框-->
 <#macro radio list name value="">
     <#list list as item>
         <input type="radio" title="${item.label}" name="${name}" <#if value=="${item.getOrdinal()}">checked</#if> value="${item.getOrdinal()}" >

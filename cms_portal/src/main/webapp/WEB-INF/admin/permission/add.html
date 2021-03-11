@@ -19,7 +19,7 @@
                 <@form.radio list=permissionType name="menu" value="0"></@form.radio>
             </@form.inline>
             <@form.inline label="菜单url">
-                <input name="parentId" class="layui-input" type="text">
+                <input name="url" class="layui-input" type="text">
             </@form.inline>
         </@form.item>
 
@@ -43,7 +43,13 @@
 </@main.layout>
 
 <script>
-    LayUtil.form.init(function () {
-        
+    // 初始化 layui的form
+    LayUtil.form.init(function (inner) {
+        inner.submit(function(data){
+            core.http({
+                url:"${adminPath}/permission/add.do",
+                data:data.field
+            })
+        })
     })
 </script>
