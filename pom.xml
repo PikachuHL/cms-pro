@@ -62,6 +62,9 @@
         <mybatisEhcacheVersion>1.1.0</mybatisEhcacheVersion>
         <luceneVersion>4.6.1</luceneVersion>
         <fasterxmlUuidVersion>3.1.4</fasterxmlUuidVersion>
+
+        <junitVersion>4.12</junitVersion>
+        <mockitoVersion>2.28.2</mockitoVersion>
     </properties>
 
     <dependencies>
@@ -259,6 +262,32 @@
             <groupId>org.mapstruct</groupId>
             <artifactId>mapstruct-processor</artifactId>
             <version>${mapstructVersion}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+            <version>${springVersion}</version>
+        </dependency>
+
+        <!--junit-->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${junitVersion}</version>
+        </dependency>
+
+        <!--单元测试框架 mockito-->
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <version>${mockitoVersion}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>${guavaVersion}</version>
         </dependency>
 
     </dependencies>

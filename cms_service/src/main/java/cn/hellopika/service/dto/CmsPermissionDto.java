@@ -8,6 +8,7 @@ import org.hibernate.validator.constraints.NotBlank;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 @Getter
 @Setter
@@ -26,4 +27,6 @@ public class CmsPermissionDto extends BaseDto<Integer> {
     @Min(value = 0, message = "序号不能小于0")
     @Max(value = 9999, message = "序号不能大于9999")
     private Integer priority;
+
+    private List<CmsPermissionDto> children;
 }
