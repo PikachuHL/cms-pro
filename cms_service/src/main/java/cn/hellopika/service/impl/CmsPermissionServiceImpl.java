@@ -27,7 +27,7 @@ public class CmsPermissionServiceImpl implements CmsPermissionService {
 
     @Override
     public CmsPermissionDto selectById(int id) {
-        return null;
+        return CmsPermissionConverter.CONVERTER.entityToDto(cmsPermissionMapper.selectById(id));
     }
 
     @Override

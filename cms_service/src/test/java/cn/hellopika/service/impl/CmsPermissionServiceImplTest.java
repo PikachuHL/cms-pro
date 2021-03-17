@@ -8,10 +8,7 @@ import org.junit.runner.RunWith;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.util.CollectionUtils;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static org.junit.Assert.*;
 
@@ -29,16 +26,27 @@ public class CmsPermissionServiceImplTest {
         // 仅用于存放 顶层菜单
         List<CmsPermissionDto> top = new ArrayList<>();
 
+        Integer excludeId = 3;
+
         permissionList.forEach(x->{
             Integer id = x.getId();
+            if(id.compareTo(excludeId) == 0){
+                return;
+            }
+
             permissionMap.put(id, x);
 
             Integer parentId = x.getParentId();
 
+            // 只有顶级菜单才放到top里面
             if(parentId == 0){
                 top.add(x);
             }else {
                 CmsPermissionDto parentDto = permissionMap.get(parentId);
+                if(Objects.isNull(parentDto)){
+                    return;
+                }
+
                 List<CmsPermissionDto> children = parentDto.getChildren();
 
                 if(CollectionUtils.isEmpty(children)){

@@ -235,12 +235,18 @@ LayUtil.prototype = {
 
                 layui.extend({
                     treetable: '{/}' + BASE_PATH + '/admin/layui/lay/modules/treetable'
-                }).use('treetable', function () {
+                }).use(['treetable', 'table'], function () {
                     that.treetable = layui.treetable;
                     that.treetable.render(option);
-                    (callback instanceof Function) && callback(that, that.treetable);
+                    that.table = layui.table;
+                    (callback instanceof Function) && callback(that);
                 });
                 return this;
+            },
+            rightTool: function (filter, callback) {
+                this.table.on('tool('+filter+')', function (obj) {
+                    (callback instanceof Function) && callback(obj);
+                })
             }
         }
         LayUtil.treeTable = new Inner();

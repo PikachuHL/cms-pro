@@ -2,34 +2,35 @@
 <#import "/layout/backend/form.ftl" as form>
 <@main.layout>
     <@form.form>
-        <input name="parentId" class="layui-input" type="hidden">
+        <input name="id" class="layui-input" type="hidden" value="${data.id!}">
+        <input name="parentId" class="layui-input" type="hidden" value="${data.parentId!}">
         <@form.item>
             <@form.inline label="上级菜单">
                 <ul id="selectTree"></ul>
             </@form.inline>
             <@form.inline label="权限名称" required=true>
-                <input name="name" class="layui-input" type="text">
+                <input name="name" class="layui-input" type="text" value="${data.name!}">
             </@form.inline>
         </@form.item>
         <@form.item>
             <@form.inline label="权限类型" required=true>
-                <@form.radio list=permissionType name="menu" value="1"></@form.radio>
+                <@form.radio list=permissionType name="menu" value="${data.menu?string('1','0')}"></@form.radio>
             </@form.inline>
             <@form.inline label="菜单url">
-                <input name="url" class="layui-input" type="text">
+                <input name="url" class="layui-input" type="text" value="${data.url!}">
             </@form.inline>
         </@form.item>
         <@form.item>
             <@form.inline label="权限标识">
-                <input name="action" class="layui-input" type="text">
+                <input name="action" class="layui-input" type="text" value="${data.action!}">
             </@form.inline>
             <@form.inline label="菜单图标">
-                <input name="icon" class="layui-input" type="text">
+                <input name="icon" class="layui-input" type="text" value="${data.icon!}">
             </@form.inline>
         </@form.item>
         <@form.item>
             <@form.inline label="排序" required=true>
-                <input name="priority" class="layui-input" type="number">
+                <input name="priority" class="layui-input" type="number" value="${data.priority!}">
             </@form.inline>
         </@form.item>
 
@@ -42,8 +43,8 @@
 
 <script>
     LayUtil.selectTree.init({
-        url: "${adminPath}/permission/selectTree.do",
-        <#if parentId??>selectInitVal:"${parentId}",</#if>
+        url: "${adminPath}/permission/selectTree.do?excludeId=${data.id}",
+        selectInitVal:"${data.parentId}",
         selectTips:"上级菜单"
     },function(inner,dtree){
         dtree.on("node('selectTree')",function(obj){
@@ -54,7 +55,7 @@
     LayUtil.form.init(function(form){
         form.submit(function(data){
             core.http({
-                url:"${adminPath}/permission/add.do",
+                url:"${adminPath}/permission/edit.do",
                 data:data.field
             })
         })

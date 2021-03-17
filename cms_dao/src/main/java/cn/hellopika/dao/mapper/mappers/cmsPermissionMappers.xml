@@ -81,4 +81,8 @@
     <select id="selectAll" resultMap="baseMap">
         select <include refid="allColumn"/> from cms_permission
     </select>
+
+    <select id="selectById" resultMap="baseMap">
+        select <include refid="allColumn"/> from cms_permission where id=#{id}
+    </select>
 </mapper>

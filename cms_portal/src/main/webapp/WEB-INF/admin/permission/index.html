@@ -26,6 +26,19 @@
             {templet: '#rightTemplate', align: 'center', title: '操作'}
         ]],
         toolbar:'#toolbar'
+    }, function (inner) {
+        inner.rightTool("treeTable", function (obj) {
+            switch (obj.event) {
+                case "add":
+                    window.location.href = "${adminPath}/permission/add.do?parentId=" + obj.data.id;
+                    break;
+                case "edit":
+                    window.location.href = "${adminPath}/permission/edit.do?id=" + obj.data.id;
+                    break;
+                case "del":
+                    break;
+            }
+        })
     });
 </script>
 
