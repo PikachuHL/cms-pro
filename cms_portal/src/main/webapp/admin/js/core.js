@@ -45,10 +45,13 @@ let core = {
                             break;
                         case CONSTANT.HTTP.SUCCESS:
                             if (that.autoComplete) {
-                                handler = function () {
-                                    //后退刷新
-                                    window.location.href = document.referrer;
+                                if(that.goBack){
+                                    handler = function () {
+                                        //后退刷新
+                                        window.location.href = document.referrer;
+                                    }
                                 }
+
                                 core.prompt.msg(res.restInfo, {shade: 0.3, time: 1200}, handler);
                             }
                             break;
@@ -61,9 +64,10 @@ let core = {
         Object.assign(opt, options, option);
         this.cancel = $.ajax(opt);
     },
-    //提示相关
+
+    // 初始化 提示相关 内容
     prompt: {
-        //警告弹窗
+        // 警告弹窗
         alert: function (content, opt) {
             core.prompt.msg(content, $.extend({},
                 {
@@ -76,14 +80,31 @@ let core = {
                 }, opt));
         },
 
-        //信息框提示
+        // 信息框提示
         msg: function (content, option, callback) {
             LayUtil.layer.init(function (inner) {
                 inner.msg(content, option, callback);
             })
-        }
+        },
 
+        // 询问框
+        confirm:function (content, option, callback) {
+            LayUtil.layer.init(function (inner){
+                inner.confirm(content, option, callback);
+            })
+        }
+    },
+
+    // 业务相关
+    business: {
+        delete: function (data, callback) {
+            let config = {url:"delete.do", goBack: false, data:{id:data.id}}
+            core.prompt.confirm("确认删除?", {icon:3,title:'提示'}, function () {
+                core.http(config, callback)
+            })
+        }
     }
+
 };
 
 
@@ -176,6 +197,16 @@ LayUtil.prototype = {
             // 信息提示框
             msg: function (content, option, callback) {
                 return layer.msg(content, option, callback);
+            },
+
+            //询问框
+            confirm:function (content, option, callback) {
+                let that = this;
+                this.layer.confirm(content, option, function (index) {
+                    // 关闭询问框
+                    that.layer.close(index);
+                    (callback instanceof Function) && callback();
+                })
             }
         }
         LayUtil.layer = new Inner();
@@ -239,13 +270,24 @@ LayUtil.prototype = {
                     that.treetable = layui.treetable;
                     that.treetable.render(option);
                     that.table = layui.table;
+                    that.rightTool(function (obj) {
+                        if(obj.event!==undefined && obj.event==="del"){
+                            that.delete(obj.data, $.extend({}, LayUtil.treeTableOption, config))
+                        }
+                    });
                     (callback instanceof Function) && callback(that);
                 });
                 return this;
             },
-            rightTool: function (filter, callback) {
+            rightTool: function (callback, filter="treeTable") {
                 this.table.on('tool('+filter+')', function (obj) {
                     (callback instanceof Function) && callback(obj);
+                })
+            },
+            delete:function (data, option) {
+                let that = this;
+                core.business.delete(data, function (option) {
+                    that.treetable.render(option);
                 })
             }
         }

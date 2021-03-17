@@ -26,25 +26,12 @@
             {templet: '#rightTemplate', align: 'center', title: '操作'}
         ]],
         toolbar:'#toolbar'
-    }, function (inner) {
-        inner.rightTool("treeTable", function (obj) {
-            switch (obj.event) {
-                case "add":
-                    window.location.href = "${adminPath}/permission/add.do?parentId=" + obj.data.id;
-                    break;
-                case "edit":
-                    window.location.href = "${adminPath}/permission/edit.do?id=" + obj.data.id;
-                    break;
-                case "del":
-                    break;
-            }
-        })
     });
 </script>
 
 <script type="text/html" id="rightTemplate">
-    <a class="layui-btn layui-bg-blue layui-btn-xs" lay-event="add">添加</a>
-    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="edit">修改</a>
+    <a class="layui-btn layui-bg-blue layui-btn-xs" href="${adminPath}/permission/add.do?parentId={{d.id}}">添加</a>
+    <a class="layui-btn layui-btn-primary layui-btn-xs" href="${adminPath}/permission/edit.do?id={{d.id}}">修改</a>
     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
 </script>
 <script type="text/html" id="toolbar">

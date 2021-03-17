@@ -68,6 +68,12 @@ public class PermissionController {
         return "admin/permission/edit";
     }
 
+    @PostMapping("delete.do")
+    @ResponseBody
+    public Result doDelete(Integer id){
+        return Result.success();
+    }
+
 
     @PostMapping("selectTree.do")
     @ResponseBody
