@@ -24,10 +24,15 @@ public class Result<T extends Serializable> implements Serializable {
     public static <W extends Serializable> Result<W> success(String restInfo){
         return new Result<>(200, restInfo);
     }
+    public static <W extends Serializable> Result<W> success(W data){
+        return new Result<>(200, data);
+    }
 
     public static <W extends Serializable> Result<W> success(String restInfo, W data){
         return new Result<>(200, restInfo, data);
     }
+
+
 
 
     public static <W extends Serializable> Result<W> failed(){
@@ -46,6 +51,11 @@ public class Result<T extends Serializable> implements Serializable {
     public Result(int restCode, String restInfo) {
         this.restCode = restCode;
         this.restInfo = restInfo;
+    }
+
+    public Result(int restCode, T data) {
+        this.restCode = restCode;
+        this.data = data;
     }
 
     public Result(int restCode, String restInfo, T data) {

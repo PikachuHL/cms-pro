@@ -8,6 +8,8 @@ import cn.hellopika.service.dto.CmsUserDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class CmsUserServiceImpl implements CmsUserService {
 
@@ -36,6 +38,11 @@ public class CmsUserServiceImpl implements CmsUserService {
 
     @Override
     public CmsUserDto selectById(int id) {
+        return null;
+    }
+
+    @Override
+    public List<CmsUserDto> selectAll() {
         return null;
     }
 }

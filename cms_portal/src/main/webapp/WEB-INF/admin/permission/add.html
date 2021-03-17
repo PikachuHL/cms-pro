@@ -1,28 +1,24 @@
-<#import "/layout/backend/main.ftl" as main >
-<#import "/layout/backend/form.ftl" as form >
-
+<#import "/layout/backend/main.ftl" as main>
+<#import "/layout/backend/form.ftl" as form>
 <@main.layout>
     <@form.form>
-
+        <input name="parentId" class="layui-input" type="hidden">
         <@form.item>
             <@form.inline label="上级菜单">
-                <input name="parentId" class="layui-input" type="text">
+                <ul id="selectTree"></ul>
             </@form.inline>
             <@form.inline label="权限名称" required=true>
                 <input name="name" class="layui-input" type="text">
             </@form.inline>
         </@form.item>
-
         <@form.item>
             <@form.inline label="权限类型" required=true>
-                <!-- permissionType为Controller中放到 model 里面的一个 attribute -->
-                <@form.radio list=permissionType name="menu" value="0"></@form.radio>
+                <@form.radio list=permissionType name="menu" value="1"></@form.radio>
             </@form.inline>
             <@form.inline label="菜单url">
                 <input name="url" class="layui-input" type="text">
             </@form.inline>
         </@form.item>
-
         <@form.item>
             <@form.inline label="权限标识">
                 <input name="action" class="layui-input" type="text">
@@ -31,7 +27,6 @@
                 <input name="icon" class="layui-input" type="text">
             </@form.inline>
         </@form.item>
-
         <@form.item>
             <@form.inline label="排序" required=true>
                 <input name="priority" class="layui-input" type="number">
@@ -42,14 +37,26 @@
     </@form.form>
 </@main.layout>
 
+<link rel="stylesheet" href="${basePath}/admin/layui/layui_ext/dtree/dtree_select_tree.css">
+<link rel="stylesheet" href="${basePath}/admin/layui/layui_ext/dtree/font/dtreefont.css">
+
 <script>
-    // 初始化 layui的form
-    LayUtil.form.init(function (inner) {
-        inner.submit(function(data){
+    LayUtil.selectTree.init({
+        url: "${adminPath}/permission/selectTree.do",
+        selectTips:"上级菜单"
+    },function(inner,dtree){
+        dtree.on("node('selectTree')",function(obj){
+            $('input[name="parentId"]').val(obj.param.nodeId);
+        })
+    });
+
+    LayUtil.form.init(function(form){
+        form.submit(function(data){
             core.http({
                 url:"${adminPath}/permission/add.do",
                 data:data.field
             })
         })
     })
+
 </script>

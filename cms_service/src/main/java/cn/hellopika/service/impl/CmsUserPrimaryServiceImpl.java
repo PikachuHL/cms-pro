@@ -8,6 +8,8 @@ import cn.hellopika.service.dto.CmsUserPrimaryDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class CmsUserPrimaryServiceImpl implements CmsUserPrimaryService {
 
@@ -32,5 +34,10 @@ public class CmsUserPrimaryServiceImpl implements CmsUserPrimaryService {
         CmsUserPrimaryDto cmsUserPrimaryDto = CmsUserPrimaryConverter.CONVERTER.entityToDto(cmsUserPrimaryEntity);
 
         return cmsUserPrimaryDto;
+    }
+
+    @Override
+    public List<CmsUserPrimaryDto> selectAll() {
+        return null;
     }
 }

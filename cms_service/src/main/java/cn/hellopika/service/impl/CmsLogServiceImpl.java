@@ -8,6 +8,8 @@ import cn.hellopika.service.dto.CmsLogDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class CmsLogServiceImpl implements CmsLogService {
 
@@ -28,6 +30,11 @@ public class CmsLogServiceImpl implements CmsLogService {
 
     @Override
     public CmsLogDto selectById(int id) {
+        return null;
+    }
+
+    @Override
+    public List<CmsLogDto> selectAll() {
         return null;
     }
 }

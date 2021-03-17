@@ -5,6 +5,7 @@
 
 <mapper namespace="cn.hellopika.dao.mapper.CmsPermissionMapper">
 
+    <!-- 新增的 列 -->
     <sql id="column">
         <if test="parentId != null">
             parent_id,
@@ -30,6 +31,7 @@
         create_time
     </sql>
 
+    <!-- 新增的 值 -->
     <sql id="value">
         <if test="parentId != null">
             #{parentId},
@@ -55,8 +57,28 @@
         #{createTime}
     </sql>
 
+    <!-- 查询的所有列 -->
+    <sql id="allColumn">
+        id, parent_id, is_menu, icon, name, action, url, priority
+    </sql>
+
+    <resultMap id="baseMap" type="cn.hellopika.dao.entity.CmsPermissionEntity">
+        <id column="id" property="id"/>
+        <result column="parent_id" property="parentId"/>
+        <result column="is_menu" property="menu"/>
+        <result column="icon" property="icon"/>
+        <result column="name" property="name"/>
+        <result column="action" property="action"/>
+        <result column="url" property="url"/>
+        <result column="priority" property="priority"/>
+    </resultMap>
+
 
     <insert id="save">
         insert into cms_permission (<include refid="column"/>) values (<include refid="value"/>)
     </insert>
+
+    <select id="selectAll" resultMap="baseMap">
+        select <include refid="allColumn"/> from cms_permission
+    </select>
 </mapper>

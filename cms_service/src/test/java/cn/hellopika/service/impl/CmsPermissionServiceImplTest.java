@@ -23,8 +23,10 @@ public class CmsPermissionServiceImplTest {
     public void test(){
         List<CmsPermissionDto> permissionList = createData();
 
+        // 新建map用于存放 id 和 id所对应的dto
         Map<Integer, CmsPermissionDto> permissionMap = new HashMap<>();
 
+        // 仅用于存放 顶层菜单
         List<CmsPermissionDto> top = new ArrayList<>();
 
         permissionList.forEach(x->{

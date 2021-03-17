@@ -9,7 +9,7 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="format-detection" content="telephone=no">
-    <link rel="stylesheet" href="${basePath}/admin/layui-v2.5.4/css/layui.css" media="all">
+    <link rel="stylesheet" href="${basePath}/admin/layui/css/layui.css" media="all">
     <style>
         html, body {
             width: 100%;
@@ -149,7 +149,7 @@
     </div>
 </div>
 <script src="${basePath}/common/jquery-3.4.1/jquery-3.4.1.min.js" charset="utf-8"></script>
-<script src="${basePath}/admin/layui-v2.5.4/layui.js" charset="utf-8"></script>
+<script src="${basePath}/admin/layui/layui.js" charset="utf-8"></script>
 <script src="${basePath}/admin/js/jquery.particleground.min.js" charset="utf-8"></script>
 <script src="${basePath}/admin/js/core.js" charset="utf-8"></script>
 <script>
@@ -163,7 +163,7 @@
 
     $('input[name="username"]').focus();
 
-    LayUtil.form.init(function(inner,form){
+    LayUtil.form.init(function(inner){
         inner.submit(function(data){
             core.throttle(submit,data.field);
         })

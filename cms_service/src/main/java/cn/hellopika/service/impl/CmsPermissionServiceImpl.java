@@ -7,6 +7,8 @@ import cn.hellopika.service.dto.CmsPermissionDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class CmsPermissionServiceImpl implements CmsPermissionService {
 
@@ -26,5 +28,10 @@ public class CmsPermissionServiceImpl implements CmsPermissionService {
     @Override
     public CmsPermissionDto selectById(int id) {
         return null;
+    }
+
+    @Override
+    public List<CmsPermissionDto> selectAll() {
+        return CmsPermissionConverter.CONVERTER.entityToDto(cmsPermissionMapper.selectAll());
     }
 }

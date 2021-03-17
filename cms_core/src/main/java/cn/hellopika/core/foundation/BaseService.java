@@ -1,6 +1,7 @@
 package cn.hellopika.core.foundation;
 
 import java.io.Serializable;
+import java.util.List;
 
 public interface BaseService<D extends BaseDto<PK>, PK extends Serializable> {
     /**
@@ -21,4 +22,10 @@ public interface BaseService<D extends BaseDto<PK>, PK extends Serializable> {
      * @return
      */
     D selectById(int id);
+
+    /**
+     * 查询所有
+     * @return
+     */
+    List<D> selectAll();
 }
