@@ -71,4 +71,6 @@ public class LoginController {
             log.error("验证码生成错误");
         }
     }
+
+
 }

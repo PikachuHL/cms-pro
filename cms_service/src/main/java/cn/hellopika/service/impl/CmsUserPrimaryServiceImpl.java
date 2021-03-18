@@ -22,12 +22,17 @@ public class CmsUserPrimaryServiceImpl implements CmsUserPrimaryService {
     }
 
     @Override
+    public void deleteById(Integer id) {
+
+    }
+
+    @Override
     public void update(CmsUserPrimaryDto dto) {
 
     }
 
     @Override
-    public CmsUserPrimaryDto selectById(int id) {
+    public CmsUserPrimaryDto selectById(Integer id) {
 
         CmsUserPrimaryEntity cmsUserPrimaryEntity = cmsUserPrimaryMapper.selectById(id);
         // 把 entity 转换成 dto

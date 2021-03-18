@@ -21,12 +21,17 @@ public class CmsSiteServiceImpl implements CmsSiteService {
     }
 
     @Override
+    public void deleteById(Integer id) {
+
+    }
+
+    @Override
     public void update(CmsSiteDto cmsSiteDto) {
         cmsSiteMapper.update(CmsSiteConverter.CONVERTER.dtoToEntity(cmsSiteDto));
     }
 
     @Override
-    public CmsSiteDto selectById(int id) {
+    public CmsSiteDto selectById(Integer id) {
         return CmsSiteConverter.CONVERTER.entityToDto(cmsSiteMapper.selectById(id));
     }
 

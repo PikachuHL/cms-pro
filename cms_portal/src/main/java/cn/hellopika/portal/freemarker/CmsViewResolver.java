@@ -26,7 +26,8 @@ public class CmsViewResolver extends FreeMarkerView {
         String contextPath = request.getContextPath();
         String servletPath = request.getServletPath();
 
-        List<String> includeGoBackList = Arrays.asList("add.do", "edit.do");
+        // 那些页面添加 回退按钮
+        List<String> includeGoBackList = Arrays.asList("add.do", "edit.do", "error.do");
 
         //就认为是后台请求路径
         if (requestURI.contains(ADMIN_PATH)) {

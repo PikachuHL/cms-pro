@@ -11,4 +11,9 @@ public class IndexController {
         return "admin/index";
     }
 
+    @GetMapping("error.do")
+    public String toError(){
+        return "admin/error";
+    }
+
 }

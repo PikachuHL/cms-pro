@@ -280,13 +280,15 @@ LayUtil.prototype = {
                 return this;
             },
             rightTool: function (callback, filter="treeTable") {
+                // 用于监听 lay-filter = filter 的 table
+                // obj.data 获取当前行数据, obj.event 获取lay-event对应的值
                 this.table.on('tool('+filter+')', function (obj) {
                     (callback instanceof Function) && callback(obj);
                 })
             },
             delete:function (data, option) {
                 let that = this;
-                core.business.delete(data, function (option) {
+                core.business.delete(data, function () {
                     that.treetable.render(option);
                 })
             }

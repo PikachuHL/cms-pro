@@ -1,16 +1,21 @@
 package cn.hellopika.context.utils;
 
+import cn.hellopika.context.foundation.Result;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.Objects;
 
 /**
  * 获取 request 和 response
  * 获取 访问者ip地址
  */
+@Slf4j
 public class UtilsHttp {
 
     private static final String HEADER_REAL_IP = "X-Real-IP";
@@ -78,5 +83,29 @@ public class UtilsHttp {
             }
             return ip;
         }
+    }
+
+    /**
+     * 根据请求类型响应不同的异常
+     *
+     * @param path  跳转路径
+     * @param info  错误信息
+     * @return      Result
+     */
+    public static Result<String> responseException(String path, String info){
+        HttpServletRequest request = getRequest();
+
+        //如果不是ajax请求, 就跳转页面; 如果是ajax请求, 就返回json
+        if(Objects.isNull(request.getHeader("X-Requested-With"))){
+            HttpServletResponse response = getResponse();
+            try {
+                response.sendRedirect(request.getServletPath() + path);
+                return null;
+            } catch (IOException e) {
+                log.error("异常跳转失败");
+            }
+        }
+
+        return Result.failed(info);
     }
 }

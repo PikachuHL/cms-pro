@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.CollectionUtils;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,9 +20,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.jws.WebParam;
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import java.util.*;
 
 @Controller
+@Validated
 @RequestMapping("permission")
 public class PermissionController {
 
@@ -40,7 +43,7 @@ public class PermissionController {
     }
 
     @GetMapping("add.do")
-    public String toAdd(Integer parentId, Model model) {
+    public String toAdd(@NotNull(message = "请传入id(add.do)") Integer parentId, Model model) {
         model.addAttribute("parentId", parentId);
         model.addAttribute("permissionType", PermissionTypeEnum.values());
         return "/admin/permission/add";
@@ -61,7 +64,7 @@ public class PermissionController {
     }
 
     @GetMapping("edit.do")
-    public String toEdit(Integer id, Model model){
+    public String toEdit(@NotNull(message = "请传入id(edit.do)") Integer id, Model model){
         CmsPermissionDto cmsPermissionDto = cmsPermissionService.selectById(id);
         model.addAttribute("data", cmsPermissionDto);
         model.addAttribute("permissionType", PermissionTypeEnum.values());
@@ -70,8 +73,9 @@ public class PermissionController {
 
     @PostMapping("delete.do")
     @ResponseBody
-    public Result doDelete(Integer id){
-        return Result.success();
+    public Result doDelete(@NotNull(message = "请传入id(delete.do)") Integer id){
+        cmsPermissionService.deleteById(id);
+        return Result.success("删除成功");
     }
 
 

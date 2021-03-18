@@ -11,6 +11,12 @@ public interface BaseService<D extends BaseDto<PK>, PK extends Serializable> {
     void save(D dto);
 
     /**
+     * 根据 id 删除
+     * @param id
+     */
+    void deleteById(Integer id);
+
+    /**
      * 修改
      * @param dto
      */
@@ -21,7 +27,7 @@ public interface BaseService<D extends BaseDto<PK>, PK extends Serializable> {
      * @param id
      * @return
      */
-    D selectById(int id);
+    D selectById(Integer id);
 
     /**
      * 查询所有

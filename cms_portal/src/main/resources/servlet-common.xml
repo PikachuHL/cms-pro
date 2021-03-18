@@ -58,6 +58,11 @@
         </property>
     </bean>
 
+    <!--注册方法验证的后处理器-->
+    <bean class="org.springframework.validation.beanvalidation.MethodValidationPostProcessor">
+        <property name="validator" ref="validator"/>
+    </bean>
+
     <!--配置视图解析器-->
     <bean id="freeMarkerViewResolver" class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
         <property name="suffix" value=".html"/>

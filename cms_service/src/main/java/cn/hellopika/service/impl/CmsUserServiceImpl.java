@@ -1,5 +1,6 @@
 package cn.hellopika.service.impl;
 
+import ch.qos.logback.core.rolling.helper.IntegerTokenConverter;
 import cn.hellopika.dao.entity.CmsUserEntity;
 import cn.hellopika.dao.mapper.CmsUserMapper;
 import cn.hellopika.service.api.CmsUserService;
@@ -32,12 +33,17 @@ public class CmsUserServiceImpl implements CmsUserService {
     }
 
     @Override
+    public void deleteById(Integer id) {
+
+    }
+
+    @Override
     public void update(CmsUserDto cmsUserDto) {
         cmsUserMapper.update(CmsUserConverter.CONVERTER.dtoToEntity(cmsUserDto));
     }
 
     @Override
-    public CmsUserDto selectById(int id) {
+    public CmsUserDto selectById(Integer id) {
         return null;
     }
 
