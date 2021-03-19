@@ -71,6 +71,15 @@ public class PermissionController {
         return "admin/permission/edit";
     }
 
+    @PostMapping("edit.do")
+    @ResponseBody
+    @DoValid
+    @DoLog(content = "修改权限")
+    public Result<String> doEdit(@Valid CmsPermissionDto dto, BindingResult result){
+        cmsPermissionService.update(dto);
+        return Result.success("修改权限成功");
+    }
+
     @PostMapping("delete.do")
     @ResponseBody
     public Result doDelete(@NotNull(message = "请传入id(delete.do)") Integer id){
@@ -82,7 +91,7 @@ public class PermissionController {
     @PostMapping("selectTree.do")
     @ResponseBody
     public Result doSelectTree(Integer excludeId) {
-        List<CmsPermissionDto> permissionList = createData();
+        List<CmsPermissionDto> permissionList = cmsPermissionService.selectAll();
 
         // 新建map用于存放 id 和 id所对应的dto
         Map<Integer, CmsPermissionDto> permissionMap = new HashMap<>();
@@ -120,38 +129,5 @@ public class PermissionController {
         });
 
         return Result.success((ArrayList)top);
-    }
-
-
-    // 自己创建一些数据, 用于测试
-    public List<CmsPermissionDto> createData() {
-        List<CmsPermissionDto> cmsPermissionDtoList = new ArrayList<>();
-
-        CmsPermissionDto cmsPermissionDto1 = new CmsPermissionDto();
-        CmsPermissionDto cmsPermissionDto2 = new CmsPermissionDto();
-        CmsPermissionDto cmsPermissionDto3 = new CmsPermissionDto();
-        CmsPermissionDto cmsPermissionDto4 = new CmsPermissionDto();
-
-        cmsPermissionDto1.setName("测试1");
-        cmsPermissionDto2.setName("测试2");
-        cmsPermissionDto3.setName("测试3");
-        cmsPermissionDto4.setName("测试4");
-
-        cmsPermissionDto1.setId(1);
-        cmsPermissionDto2.setId(2);
-        cmsPermissionDto3.setId(3);
-        cmsPermissionDto4.setId(4);
-
-        cmsPermissionDto1.setParentId(0);
-        cmsPermissionDto2.setParentId(1);
-        cmsPermissionDto3.setParentId(2);
-        cmsPermissionDto4.setParentId(3);
-
-        cmsPermissionDtoList.add(cmsPermissionDto1);
-        cmsPermissionDtoList.add(cmsPermissionDto2);
-        cmsPermissionDtoList.add(cmsPermissionDto3);
-        cmsPermissionDtoList.add(cmsPermissionDto4);
-
-        return cmsPermissionDtoList;
     }
 }

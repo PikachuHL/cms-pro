@@ -56,6 +56,12 @@
           "target": "_self",
           "child": [
             {
+              "title": "角色管理",
+              "href": "role/index.do",
+              "icon": "fa fa-list-alt",
+              "target": "_self"
+            },
+            {
               "title": "权限管理",
               "href": "permission/index.do",
               "icon": "fa fa-list-alt",

@@ -6,6 +6,10 @@ public class BaseException extends RuntimeException {
     private String msg;
 
     public BaseException(Integer code, String msg){
+        // 用于不让自定义的业务异常写 栈信息(stackTrace)
+        // 从而优化自定义异常的性能
+        super(msg, null, false, false);
+
         this.code = code;
         this.msg = msg;
     }

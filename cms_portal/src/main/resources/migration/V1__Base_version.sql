@@ -106,7 +106,31 @@ VALUES (1, 'cms官网','cms,内容管理', 'cms内容管理系统');
   DEFAULT CHARSET = utf8;
 
 
+-- ----------------------------
+--  Table structure for cms_role  角色表
+-- ----------------------------
+CREATE TABLE cms_role
+(
+    create_time timestamp               not null default CURRENT_TIMESTAMP,
+    update_time timestamp               not null default '0000-00-00 00:00:00',
+    id          int(11)                 NOT NULL AUTO_INCREMENT primary key,
+    name        varchar(50)             not null default '' comment '角色名称',
+    priority    int        default '1'  not null comment '排列顺序',
+    is_all      tinyint(1) default 0    not null comment '是否所有权限 0.否 1.是',
+    status      tinyint(1) default 0    not null comment '状态 0:正常 1:禁用'
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8;
 
+
+-- ----------------------------
+--  Table structure for cms_role_permission  角色权限表
+-- ----------------------------
+CREATE TABLE cms_role_permission
+(
+    role_id         int not null comment '角色id',
+    permission_id   int not null comment '权限id'
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8;
 
 
 

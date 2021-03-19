@@ -1,0 +1,46 @@
+<#import "/layout/backend/main.ftl" as main>
+<#import "/layout/backend/form.ftl" as form>
+<link rel="stylesheet" href="${basePath}/admin/layui/layui_ext/dtree/dtree_tree.css">
+<link rel="stylesheet" href="${basePath}/admin/layui/layui_ext/dtree/font/dtreefont.css">
+<@main.layout>
+    <@form.form>
+
+        <@form.item>
+            <@form.inline label="角色名称" required=true>
+                <input name="name" class="layui-input" type="text" lay-verify="required" maxlength="15">
+            </@form.inline>
+            <@form.inline label="排序" required=true>
+                <input name="priority" class="layui-input" type="number" lay-verify="required" value="1">
+            </@form.inline>
+        </@form.item>
+
+        <@form.item>
+            <@form.inline label="是否拥有所有权限">
+                <input name="all"  class="layui-input" type="radio" lay-filter="permissionFilter" value="1" title="是">
+                <input name="all"  class="layui-input" type="radio" lay-filter="permissionFilter" value="0" title="否" checked>
+            </@form.inline>
+        </@form.item>
+
+        <@form.item>
+            <@form.inline label="权限">
+                <div id="tree"></div>
+            </@form.inline>
+        </@form.item>
+
+        <@form.submit></@form.submit>
+    </@form.form>
+</@main.layout>
+
+
+<script>
+    LayUtil.form.init(function () {
+        
+    });
+
+    LayUtil.tree.init({
+        url:"${adminPath}/role/permission.do",
+        method: "post",
+        checkbar:true
+    });
+
+</script>

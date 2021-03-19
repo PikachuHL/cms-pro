@@ -163,6 +163,69 @@ LayUtil.selectTreeOption = {
     },
 };
 
+//layui的表格固定配置
+LayUtil.dataGridOption = {
+    id: "dataGrid",
+    elem: '#dataGrid',
+    method: 'post',
+    page: true,
+    url: '',
+    limit: 10,
+    request: {
+        pageName: 'pageCurrent', //页码的参数名称，默认：page
+        limitName: 'pageSize' //每页数据量的参数名，默认：limit
+    },
+    response: {
+        statusName: 'restCode', //数据状态的字段名称，默认：code
+        statusCode: 200, //成功的状态码，默认：0
+        msgName: 'restCode', //状态信息的字段名称，默认：msg
+        countName: 'pageCount', //数据总数的字段名称，默认：count
+        rootName: 'data'
+    },
+    parseData: function (res) {
+        // 下面字符串是对上面字符串的解释
+        return {
+            "restCode": res.restCode,
+            "pageCount": res.data ? res.data.pageCount : undefined,
+            "data": res.data ? res.data.content : undefined
+        }
+    }
+};
+
+//树形配置
+LayUtil.treeOption = {
+    elem: "#tree",
+    url: "",
+    dataType: "json",
+    async: false,
+    method: 'get',
+    dataStyle: "layuiStyle",
+    initLevel: 1,
+    data: "",
+    dot: false,
+    checkbar: false,
+    contentType:'application/json;charset=UTF-8',
+    nodeIconArray: {"1": {"open": "dtree-icon-wenjianjiazhankai", "close": "dtree-icon-weibiaoti5"}},
+    icon: ["1", "7"],
+    formatter: {
+        title: function (data) {
+            let s = data.name;
+            if (data.children) {
+                s += ' <span style=\'color:blue\'>(' + data.children.length + ')</span>';
+            }
+            return s;
+        }
+    },
+    response: {
+        statusCode: 200,
+        statusName: "restCode",
+        treeId: "id",
+        message: "restCode",
+        rootName: "data",
+        title: 'name'
+    },
+};
+
 LayUtil.prototype = {
     construct: LayUtil,
 
@@ -318,6 +381,65 @@ LayUtil.prototype = {
             }
         };
         LayUtil.selectTree = new Inner();
+    })(LayUtil),
+
+    // dataGrid
+    dataGrid:(function (LayUtil){
+        function Inner() {
+        }
+        Inner.prototype = {
+            construct:Inner,
+
+            init:function (config, callback) {
+                let option = $.extend({}, LayUtil.dataGridOption, config);
+                let that = this;
+                layui.use("table", function () {
+                    that.table = layui.table;
+                    that.table.render(option);
+                    (callback instanceof Function) && (callback(that))
+                });
+
+                return this;
+            }
+        }
+        LayUtil.dataGrid = new Inner();
+    })(LayUtil),
+
+    // dtree
+    tree:(function (LayUtil) {
+        function Inner() {
+        }
+
+        Inner.prototype = {
+            construct:Inner,
+
+            init:function (config) {
+                let that = this;
+                let option = $.extend({},LayUtil.treeOption,config);
+
+                if (option.checkbar!==undefined && option.checkbar) {
+                    // 自定扩展的二级非最后一级图标，从1开始
+                    option.nodeIconArray = {
+                        "1": {
+                            "open": "dtree-icon-wenjianjiazhankai",
+                            "close": "dtree-icon-weibiaoti5"
+                        }
+                    };
+                    option.icon = ["1", "8"];
+                }
+
+                layui.extend({
+                    dtree: '{/}' + BASE_PATH + '/admin/layui/lay/modules/dtree'
+                }).use('dtree', function () {
+                    that.dtree = layui.dtree;
+                    that.dtree.render(option);
+                });
+
+                return this;
+            }
+        };
+
+        LayUtil.tree = new Inner();
     })(LayUtil)
 
-}
+};

@@ -2,7 +2,7 @@
 <#import "/layout/backend/form.ftl" as form>
 <@main.layout>
     <@form.form>
-        <input name="parentId" class="layui-input" type="hidden">
+        <input name="parentId" class="layui-input" type="hidden"<#if parentId??>value="${parentId}"</#if>>
         <@form.item>
             <@form.inline label="上级菜单">
                 <ul id="selectTree"></ul>

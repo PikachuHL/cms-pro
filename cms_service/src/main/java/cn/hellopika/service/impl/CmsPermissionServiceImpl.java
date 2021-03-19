@@ -37,7 +37,7 @@ public class CmsPermissionServiceImpl implements CmsPermissionService {
 
     @Override
     public void update(CmsPermissionDto dto) {
-
+        cmsPermissionMapper.update(CmsPermissionConverter.CONVERTER.dtoToEntity(dto));
     }
 
     @Override

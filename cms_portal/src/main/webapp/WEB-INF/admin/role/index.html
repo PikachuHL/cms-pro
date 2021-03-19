@@ -1,0 +1,37 @@
+<#import "/layout/backend/main.ftl" as main>
+<@main.layout>
+    <table id="dataGrid" class="layui-table" lay-filter="dataGrid"></table>
+</@main.layout>
+
+<script>
+    LayUtil.dataGrid.init({
+        elem: '#dataGrid'
+        , url: '${adminPath}/role/page.do'
+        , cellMinWidth: 80 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
+        , cols: [[
+            {field: 'id', width: 80, title: 'ID', sort: true}
+            , {field: 'username', width: 80, title: '用户名'}
+            , {field: 'sex', width: 80, title: '性别', sort: true}
+            , {field: 'city', width: 80, title: '城市'}
+            , {field: 'sign', title: '签名', width: '30%', minWidth: 100} //minWidth：局部定义当前单元格的最小宽度，layui 2.2.1 新增
+            , {field: 'experience', title: '积分', sort: true}
+            , {field: 'score', title: '评分', sort: true}
+            , {field: 'classify', title: '职业'}
+            , {field: 'wealth', width: 137, title: '财富', sort: true}
+            , {templet: '#rightTemplate', align: 'center', title: '操作'}
+        ]]
+        , toolbar: "#toolbar"
+    })
+</script>
+
+<script type="text/html" id="rightTemplate">
+    <a class="layui-btn layui-bg-blue layui-btn-xs" href="${adminPath}/role/add.do?parentId={{d.id}}">添加</a>
+    <a class="layui-btn layui-btn-primary layui-btn-xs" href="${adminPath}/role/edit.do?id={{d.id}}">修改</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+</script>
+<script type="text/html" id="toolbar">
+    <a class="layui-btn layui-btn-sm layui-bg-blue" href="${adminPath}/role/add.do"><i
+                class="layui-icon layui-icon-add-1"></i>添加</a>
+    <a class="layui-btn layui-btn-sm" onclick="javascript:window.location.reload()"><i
+                class="layui-icon layui-icon-refresh-3"></i>刷新</a>
+</script>
