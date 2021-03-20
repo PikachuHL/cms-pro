@@ -16,8 +16,14 @@
 
         <@form.item>
             <@form.inline label="是否拥有所有权限">
-                <input name="all"  class="layui-input" type="radio" lay-filter="permissionFilter" value="1" title="是">
-                <input name="all"  class="layui-input" type="radio" lay-filter="permissionFilter" value="0" title="否" checked>
+                <input name="all" class="layui-input" type="radio" lay-filter="permissionFilter" value="1" title="是">
+                <input name="all" class="layui-input" type="radio" lay-filter="permissionFilter" value="0" title="否"
+                       checked>
+            </@form.inline>
+
+            <@form.inline label="状态">
+                <input name="status" class="layui-input" type="radio" value="0" title="正常" checked>
+                <input name="status" class="layui-input" type="radio" value="1" title="禁用">
             </@form.inline>
         </@form.item>
 
@@ -33,14 +39,20 @@
 
 
 <script>
-    LayUtil.form.init(function () {
-        
+    LayUtil.form.init(function (inner) {
+        inner.submit(function (data) {
+            dtreeInner.getChecked(data.field, "permission");
+            core.http({
+                url:"${adminPath}/role/add.do",
+                data: data.field
+            })
+        })
     });
 
-    LayUtil.tree.init({
-        url:"${adminPath}/role/permission.do",
+    let dtreeInner = LayUtil.tree.init({
+        url: "${adminPath}/role/permission.do",
         method: "post",
-        checkbar:true
+        checkbar: true
     });
 
 </script>

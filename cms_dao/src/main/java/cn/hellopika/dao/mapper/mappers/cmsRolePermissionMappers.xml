@@ -7,54 +7,8 @@
 
     <!-- 新增的 列 -->
     <sql id="column">
-        <if test="parentId != null">
-            parent_id,
-        </if>
-
-        <if test="icon != null and icon != ''">
-            icon,
-        </if>
-
-        <if test="menu != null">
-            is_menu,
-        </if>
-
-        <if test="action != null and action != ''">
-            action,
-        </if>
-
-        <if test="url != null and url != ''">
-            url,
-        </if>
-        name,
-        priority,
-        create_time
-    </sql>
-
-    <!-- 新增的 值 -->
-    <sql id="value">
-        <if test="parentId != null">
-            #{parentId},
-        </if>
-
-        <if test="icon != null and icon != ''">
-            #{icon},
-        </if>
-
-        <if test="menu != null">
-            #{menu},
-        </if>
-
-        <if test="action != null and action != ''">
-            #{action},
-        </if>
-
-        <if test="url != null and url != ''">
-            #{url},
-        </if>
-        #{name},
-        #{priority},
-        #{createTime}
+        role_id,
+        permission_id
     </sql>
 
     <sql id="updateColumn">
@@ -99,8 +53,11 @@
     </resultMap>
 
 
-    <insert id="save">
-        insert into cms_permission (<include refid="column"/>) values (<include refid="value"/>)
+    <insert id="batchInsert">
+        insert into cms_role_permission (<include refid="column"/>) values
+        <foreach collection="permissionList" item="item" separator=",">
+            (#{roleId},#{item})
+        </foreach>
     </insert>
 
     <update id="update">

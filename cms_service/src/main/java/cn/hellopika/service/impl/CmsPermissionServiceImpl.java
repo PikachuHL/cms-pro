@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
-import java.util.List;
+import java.util.*;
 
 @Service
 public class CmsPermissionServiceImpl implements CmsPermissionService {
@@ -48,5 +48,53 @@ public class CmsPermissionServiceImpl implements CmsPermissionService {
     @Override
     public List<CmsPermissionDto> selectAll() {
         return CmsPermissionConverter.CONVERTER.entityToDto(cmsPermissionMapper.selectAll());
+    }
+
+
+    /**
+     * 构建树形结构
+     * @param excludeId
+     * @return
+     */
+    @Override
+    public List<CmsPermissionDto> treeBuilder(Integer excludeId){
+        List<CmsPermissionDto> permissionList = selectAll();
+
+        // 新建map用于存放 id 和 id所对应的dto
+        Map<Integer, CmsPermissionDto> permissionMap = new HashMap<>();
+
+        // 仅用于存放 顶层菜单
+        List<CmsPermissionDto> top = new ArrayList<>();
+
+        permissionList.forEach(x -> {
+            Integer id = x.getId();
+            // 如果在修改页面, 需要把 小于等于自己级别的元素 不在前端显示, 就要从当前元素把链断开
+            if (Objects.nonNull(excludeId) && id.compareTo(excludeId) == 0) {
+                return; // 这里的return会跳出当前循环
+            }
+            permissionMap.put(id, x);
+
+            Integer parentId = x.getParentId();
+
+            if (parentId == 0) {
+                top.add(x);
+            } else {
+                CmsPermissionDto parentDto = permissionMap.get(parentId);
+                // 如果排除了相关元素, parentDto可能为空, 需要判断一下
+                if (Objects.isNull(parentDto) && Objects.nonNull(excludeId) && parentId.compareTo(excludeId) == 0) {
+                    return;
+                }
+                List<CmsPermissionDto> children = parentDto.getChildren();
+
+                if (CollectionUtils.isEmpty(children)) {
+                    children = new ArrayList<>();
+                }
+                children.add(x);
+
+                parentDto.setChildren(children);
+            }
+        });
+
+        return top;
     }
 }

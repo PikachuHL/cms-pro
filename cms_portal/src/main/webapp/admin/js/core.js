@@ -416,6 +416,7 @@ LayUtil.prototype = {
             init:function (config) {
                 let that = this;
                 let option = $.extend({},LayUtil.treeOption,config);
+                this.id = option.elem;
 
                 if (option.checkbar!==undefined && option.checkbar) {
                     // 自定扩展的二级非最后一级图标，从1开始
@@ -436,6 +437,19 @@ LayUtil.prototype = {
                 });
 
                 return this;
+            },
+
+            getChecked: function (obj, name) {
+
+                // dtree提供的方法来获取 被选中复选框 的值
+                // 方法的参数为dtreeoption 中 elem的值(去掉"#"), 也就是页面上的那个id
+                let arr = this.dtree.getCheckbarNodesParam(this.id.replace("#", ""));
+
+                if(arr!==undefined) {
+                    for (let i = 0; i < arr.length; i++) {
+                        obj[name+"["+i+"]"] = arr[i].nodeId;
+                    }
+                }
             }
         };
 

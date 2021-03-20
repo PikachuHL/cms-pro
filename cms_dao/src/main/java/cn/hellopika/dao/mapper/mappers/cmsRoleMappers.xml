@@ -7,53 +7,41 @@
 
     <!-- 新增的 列 -->
     <sql id="column">
-        <if test="parentId != null">
-            parent_id,
+        <if test="name!=null and name!=''">
+            name,
         </if>
 
-        <if test="icon != null and icon != ''">
-            icon,
+        <if test="priority!=null">
+            priority,
         </if>
 
-        <if test="menu != null">
-            is_menu,
+        <if test="all!=null">
+            is_all,
         </if>
 
-        <if test="action != null and action != ''">
-            action,
+        <if test="status!=null">
+            status,
         </if>
-
-        <if test="url != null and url != ''">
-            url,
-        </if>
-        name,
-        priority,
         create_time
     </sql>
 
     <!-- 新增的 值 -->
     <sql id="value">
-        <if test="parentId != null">
-            #{parentId},
+        <if test="name!=null and name!=''">
+            #{name},
         </if>
 
-        <if test="icon != null and icon != ''">
-            #{icon},
+        <if test="priority!=null">
+            #{priority},
         </if>
 
-        <if test="menu != null">
-            #{menu},
+        <if test="all!=null">
+            #{all},
         </if>
 
-        <if test="action != null and action != ''">
-            #{action},
+        <if test="status!=null">
+            #{status},
         </if>
-
-        <if test="url != null and url != ''">
-            #{url},
-        </if>
-        #{name},
-        #{priority},
         #{createTime}
     </sql>
 
@@ -100,11 +88,17 @@
 
 
     <insert id="save">
-        insert into cms_permission (<include refid="column"/>) values (<include refid="value"/>)
+        <!--获取 新增记录的id, 并且返给 entity-->
+        <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+            select LAST_INSERT_ID()
+        </selectKey>
+        insert into cms_role (<include refid="column"/>) values (<include refid="value"/>)
     </insert>
 
     <update id="update">
-        update cms_permission set <include refid="updateColumn"/> where id=#{id}
+        update cms_permission set
+        <include refid="updateColumn"/>
+        where id=#{id}
     </update>
 
     <delete id="deleteById">
@@ -112,16 +106,15 @@
     </delete>
 
     <select id="selectAll" resultMap="baseMap">
-        select <include refid="allColumn"/> from cms_permission order by parent_id asc
+        select
+        <include refid="allColumn"/>
+        from cms_permission order by parent_id asc
     </select>
 
     <select id="selectById" resultMap="baseMap">
-        select <include refid="allColumn"/> from cms_permission where id=#{id}
+        select
+        <include refid="allColumn"/>
+        from cms_permission where id=#{id}
     </select>
-
-    <select id="selectByParentId" resultMap="baseMap">
-        select <include refid="allColumn"/> from cms_permission where parent_id=#{id}
-    </select>
-
 
 </mapper>
