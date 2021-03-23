@@ -170,6 +170,7 @@ LayUtil.dataGridOption = {
     method: 'post',
     page: true,
     url: '',
+    headSearch:'tableSearchBtn',
     limit: 10,
     request: {
         pageName: 'pageCurrent', //页码的参数名称，默认：page
@@ -295,9 +296,20 @@ LayUtil.prototype = {
                 return this;
             },
 
-            //提交表单
-            submit: function (callback, name, type = "submit") {
-                this.form.on(type + "(" + (name === undefined ? 'go' : name) + ")", function (obj) {
+            //提交表单（submit 事件监听）
+            submit: function (callback, name) {
+                this.form.on("submit(" + (name === undefined ? 'go' : name) + ")", function (obj) {
+                    if (callback instanceof Function) {
+                        callback(obj);
+                        return false;
+                    }
+                    return true;
+                })
+            },
+
+            // radio 事件监听
+            radio: function(name, callback){
+                this.form.on("radio(" + name + ")", function (obj) {
                     if (callback instanceof Function) {
                         callback(obj);
                         return false;
@@ -396,10 +408,45 @@ LayUtil.prototype = {
                 layui.use("table", function () {
                     that.table = layui.table;
                     that.table.render(option);
-                    (callback instanceof Function) && (callback(that))
+                    that.rightTool(function (obj) {
+                        if(obj.event!==undefined && obj.event==="del"){
+                            that.delete(obj.data, $.extend({}, LayUtil.dataGridOption, config))
+                        }
+                    });
+                    that.renderSearch(option.headSearch);
                 });
 
                 return this;
+            },
+            //渲染form表头查询
+            renderSearch:function(name){
+                let that = this;
+                layui.use('form',function(){
+                    let form = layui.form;
+                    //监听提交
+                    form.on('submit('+name+')', function(data){
+                        that.table.reload('dataGrid',{
+                            where:data.field,
+                            page:{
+                                curr:1
+                            }
+                        });
+                        return false;
+                    });
+                })
+            },
+            rightTool: function (callback, filter="dataGrid") {
+                // 用于监听 lay-filter = filter 的 table
+                // obj.data 获取当前行数据, obj.event 获取lay-event对应的值
+                this.table.on('tool('+filter+')', function (obj) {
+                    (callback instanceof Function) && callback(obj);
+                })
+            },
+            delete:function (data, option) {
+                let that = this;
+                core.business.delete(data, function () {
+                    that.table.render(option);
+                })
             }
         }
         LayUtil.dataGrid = new Inner();

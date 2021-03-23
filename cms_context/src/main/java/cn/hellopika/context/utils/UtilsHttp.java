@@ -27,6 +27,13 @@ public class UtilsHttp {
     private static final String IP_EMPTY = "0:0:0:0:0:0:0:1";
     private static final String IP_LOOP = "127.0.0.1";
 
+    // 分页相关
+    private static final int DEFAULT_SIZE = 10;
+    private static final String PAGE_SIZE = "pageSize";
+    private static final String PAGE_CURRENT = "pageCurrent";
+    private static final String ORDER_BY = "orderBy";
+
+
     /**
      * 获取 request
      * @return
@@ -107,5 +114,58 @@ public class UtilsHttp {
         }
 
         return Result.failed(info);
+    }
+
+
+    /**
+     * 通过 request 获取前端传来的分页相关信息，并封装到 MyPageInfo 类中
+     * @return MyPageInfo
+     */
+    public static MyPageInfo getPageInfo(){
+        HttpServletRequest request = getRequest();
+
+        String pageSize = request.getParameter(PAGE_SIZE);
+        String pageCurrent = request.getParameter(PAGE_CURRENT);
+
+        return new MyPageInfo(StringUtils.isNotBlank(pageSize)?Integer.parseInt(pageSize):1,
+                StringUtils.isNotBlank(pageCurrent)?Integer.parseInt(pageCurrent):10,
+                ORDER_BY);
+    }
+
+    // 定义一个内部类，封装前端传过来的分页相关信息
+    public static final class MyPageInfo{
+        private int pageSize;
+        private int pageCurrent;
+        private String orderBy;
+
+        public MyPageInfo(int pageSize, int pageCurrent, String orderBy) {
+            this.pageSize = pageSize;
+            this.pageCurrent = pageCurrent;
+            this.orderBy = orderBy;
+        }
+
+        public int getPageSize() {
+            return pageSize;
+        }
+
+        public void setPageSize(int pageSize) {
+            this.pageSize = pageSize;
+        }
+
+        public int getPageCurrent() {
+            return pageCurrent;
+        }
+
+        public void setPageCurrent(int pageCurrent) {
+            this.pageCurrent = pageCurrent;
+        }
+
+        public String getOrderBy() {
+            return orderBy;
+        }
+
+        public void setOrderBy(String orderBy) {
+            this.orderBy = orderBy;
+        }
     }
 }

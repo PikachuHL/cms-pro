@@ -6,8 +6,8 @@
 </#macro>
 
 <#--通用form中的每一项 一行item-->
-<#macro item>
-    <div class="layui-form-item">
+<#macro item class="">
+    <div class="layui-form-item ${class}">
         <#nested>
     </div>
 </#macro>
@@ -47,4 +47,9 @@
     <#list list as item>
         <input type="radio" title="${item.label}" name="${name}" <#if value=="${item.getOrdinal()}">checked</#if> value="${item.getOrdinal()}" >
     </#list>
+</#macro>
+
+<#macro tableSearch>
+    <#nested>
+    <button class="layui-btn" lay-submit lay-filter="tableSearchBtn">查询</button>
 </#macro>

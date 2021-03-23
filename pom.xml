@@ -290,5 +290,11 @@
             <version>${guavaVersion}</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.github.pagehelper</groupId>
+            <artifactId>pagehelper</artifactId>
+            <version>${pagehelperVersion}</version>
+        </dependency>
+
     </dependencies>
 </project>

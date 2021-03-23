@@ -10,7 +10,6 @@ import cn.hellopika.service.dto.CmsPermissionDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.CollectionUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,7 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
-import java.util.*;
+import java.util.ArrayList;
 
 @Controller
 @Validated
@@ -81,6 +80,7 @@ public class PermissionController {
 
     @PostMapping("delete.do")
     @ResponseBody
+    @DoLog(content = "删除权限")
     public Result doDelete(@NotNull(message = "请传入id(delete.do)") Integer id) {
         cmsPermissionService.deleteById(id);
         return Result.success("删除成功");

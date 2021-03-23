@@ -47,43 +47,34 @@
 
     <sql id="updateColumn">
         update_time = #{updateTime},
-        <if test="parentId != null">
-            parent_id = #{parentId},
+        <if test="name!=null and name!=''">
+            name = #{name},
         </if>
 
-        <if test="icon != null and icon != ''">
-            icon = #{icon},
+        <if test="priority!=null">
+            priority = #{priority},
         </if>
 
-        <if test="menu != null">
-            is_menu = #{menu},
+        <if test="all!=null">
+            is_all = #{all},
         </if>
 
-        <if test="action!=null and action != ''">
-            action = #{action},
+        <if test="status!=null">
+            status = #{status}
         </if>
-
-        <if test="url != null and url != ''">
-            url = #{url},
-        </if>
-        name = #{name},
-        priority = #{priority}
     </sql>
 
     <!-- 查询的所有列 -->
     <sql id="allColumn">
-        id, parent_id, is_menu, icon, name, action, url, priority
+        id, name, is_all, priority, status
     </sql>
 
-    <resultMap id="baseMap" type="cn.hellopika.dao.entity.CmsPermissionEntity">
+    <resultMap id="baseMap" type="cn.hellopika.dao.entity.CmsRoleEntity">
         <id column="id" property="id"/>
-        <result column="parent_id" property="parentId"/>
-        <result column="is_menu" property="menu"/>
-        <result column="icon" property="icon"/>
+        <result column="is_all" property="all"/>
         <result column="name" property="name"/>
-        <result column="action" property="action"/>
-        <result column="url" property="url"/>
         <result column="priority" property="priority"/>
+        <result column="status" property="status"/>
     </resultMap>
 
 
@@ -96,25 +87,31 @@
     </insert>
 
     <update id="update">
-        update cms_permission set
+        update cms_role set
         <include refid="updateColumn"/>
         where id=#{id}
     </update>
 
     <delete id="deleteById">
-        delete from cms_permission where id=#{id}
+        delete from cms_role where id=#{id}
     </delete>
 
-    <select id="selectAll" resultMap="baseMap">
+    <select id="getPage" parameterType="cn.hellopika.dao.entity.CmsRoleEntity" resultMap="baseMap">
         select
         <include refid="allColumn"/>
-        from cms_permission order by parent_id asc
+        from cms_role
+        <where>
+            <if test="name!=null and name!=''">
+                name like concat('%', #{name}, '%')
+            </if>
+        </where>
+        order by priority asc
     </select>
 
     <select id="selectById" resultMap="baseMap">
         select
         <include refid="allColumn"/>
-        from cms_permission where id=#{id}
+        from cms_role where id=#{id}
     </select>
 
 </mapper>

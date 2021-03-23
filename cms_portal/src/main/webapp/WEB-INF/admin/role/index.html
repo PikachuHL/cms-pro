@@ -1,5 +1,14 @@
 <#import "/layout/backend/main.ftl" as main>
+<#import "/layout/backend/form.ftl" as form>
 <@main.layout>
+    <@form.form>
+        <@form.tableSearch>
+            <div class="layui-inline">
+                <input name="name" type="text" class="layui-input" placeholder="请输入">
+            </div>
+        </@form.tableSearch>
+    </@form.form>
+
     <table id="dataGrid" class="layui-table" lay-filter="dataGrid"></table>
 </@main.layout>
 
@@ -9,15 +18,15 @@
         , url: '${adminPath}/role/page.do'
         , cellMinWidth: 80 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
         , cols: [[
-            {field: 'id', width: 80, title: 'ID', sort: true}
-            , {field: 'username', width: 80, title: '用户名'}
-            , {field: 'sex', width: 80, title: '性别', sort: true}
-            , {field: 'city', width: 80, title: '城市'}
-            , {field: 'sign', title: '签名', width: '30%', minWidth: 100} //minWidth：局部定义当前单元格的最小宽度，layui 2.2.1 新增
-            , {field: 'experience', title: '积分', sort: true}
-            , {field: 'score', title: '评分', sort: true}
-            , {field: 'classify', title: '职业'}
-            , {field: 'wealth', width: 137, title: '财富', sort: true}
+            {field: 'id', title: 'ID', sort: true}
+            , {field: 'name', title: '角色名'}
+            , {field: 'all', title: '拥有所有权限', templet:function (data) {
+                    return data.all?'是':'否';
+                }}
+            , {field: 'status', title: '状态', templet:function (data) {
+                    return data.status?'禁用':'正常';
+                }}
+            , {field: 'priority', title: '排列顺序', sort: true}
             , {templet: '#rightTemplate', align: 'center', title: '操作'}
         ]]
         , toolbar: "#toolbar"
@@ -25,7 +34,6 @@
 </script>
 
 <script type="text/html" id="rightTemplate">
-    <a class="layui-btn layui-bg-blue layui-btn-xs" href="${adminPath}/role/add.do?parentId={{d.id}}">添加</a>
     <a class="layui-btn layui-btn-primary layui-btn-xs" href="${adminPath}/role/edit.do?id={{d.id}}">修改</a>
     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
 </script>

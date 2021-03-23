@@ -1,0 +1,85 @@
+<#import "/layout/backend/main.ftl" as main>
+<#import "/layout/backend/form.ftl" as form>
+<link rel="stylesheet" href="${basePath}/admin/layui/layui_ext/dtree/dtree_tree.css">
+<link rel="stylesheet" href="${basePath}/admin/layui/layui_ext/dtree/font/dtreefont.css">
+<@main.layout>
+    <@form.form>
+        <input name="id" class="layui-input" type="hidden" value="${data.id!}">
+        <@form.item>
+            <@form.inline label="角色名称" required=true>
+                <input name="name" class="layui-input" type="text" lay-verify="required" maxlength="15" value="${data.name!}">
+            </@form.inline>
+            <@form.inline label="排序" required=true>
+                <input name="priority" class="layui-input" type="number" lay-verify="required" value=${data.priority!}>
+            </@form.inline>
+        </@form.item>
+
+        <@form.item>
+            <@form.inline label="是否拥有所有权限">
+                <#if "${data.all?string('1','0')}"=='1'>
+                    <input name="all" class="layui-input" type="radio" lay-filter="permissionFilter" value="1" checked title="是">
+                    <input name="all" class="layui-input" type="radio" lay-filter="permissionFilter" value="0" title="否">
+                <#else>
+                    <input name="all" class="layui-input" type="radio" lay-filter="permissionFilter" value="1" title="是">
+                    <input name="all" class="layui-input" type="radio" lay-filter="permissionFilter" value="0" checked title="否">
+                </#if>
+            </@form.inline>
+
+            <@form.inline label="状态">
+                <#if "${data.status?string('1','0')}"=="1">
+                    <input name="status" class="layui-input" type="radio" value="1" checked title="禁用">
+                    <input name="status" class="layui-input" type="radio" value="0" title="正常">
+                <#else>
+                    <input name="status" class="layui-input" type="radio" value="1" title="禁用">
+                    <input name="status" class="layui-input" type="radio" value="0" checked title="正常">
+                </#if>
+
+            </@form.inline>
+        </@form.item>
+
+        <@form.item class="permission">
+            <@form.inline label="权限">
+                <div id="tree"></div>
+            </@form.inline>
+        </@form.item>
+
+        <@form.submit></@form.submit>
+    </@form.form>
+</@main.layout>
+
+
+<script>
+
+    <#if "${data.all?string('1', '0')}"=='1'>
+        $(".permission").hide();
+    </#if>
+
+    LayUtil.form.init(function (inner) {
+        inner.submit(function (data) {
+            if(data.field.all==='0'){
+                dtreeInner.getChecked(data.field, "permission");
+            }
+            core.http({
+                url:"${adminPath}/role/edit.do",
+                data: data.field
+            })
+        });
+        // 添加 radio 事件监听，当角色拥有所有权限时，隐藏权限列表
+        inner.radio("permissionFilter", function (obj) {
+            if (obj.value==="0"){
+                $(".permission").show();
+            } else{
+                $(".permission").hide();
+            }
+        })
+    });
+
+    let dtreeInner = LayUtil.tree.init({
+        url: "${adminPath}/role/permission.do",
+        method: "post",
+        contentType: "application/x-www-form-urlencoded",
+        request: {roleId:"${data.id!}"},
+        checkbar: true
+    });
+
+</script>

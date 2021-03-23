@@ -64,21 +64,20 @@
         update cms_permission set <include refid="updateColumn"/> where id=#{id}
     </update>
 
-    <delete id="deleteById">
-        delete from cms_permission where id=#{id}
+    <delete id="deleteByPermissionId">
+        delete from cms_role_permission where permission_id=#{permissionId}
     </delete>
 
-    <select id="selectAll" resultMap="baseMap">
-        select <include refid="allColumn"/> from cms_permission order by parent_id asc
+    <delete id="deleteByRoleId">
+        delete from cms_role_permission where role_id=#{roleId}
+    </delete>
+
+
+
+    <select id="selectPermissionIdsByRoleId" resultType="java.lang.Integer">
+        select permission_id from cms_role_permission where role_id=#{roleId}
     </select>
 
-    <select id="selectById" resultMap="baseMap">
-        select <include refid="allColumn"/> from cms_permission where id=#{id}
-    </select>
-
-    <select id="selectByParentId" resultMap="baseMap">
-        select <include refid="allColumn"/> from cms_permission where parent_id=#{id}
-    </select>
 
 
 </mapper>

@@ -3,11 +3,13 @@ package cn.hellopika.service.impl;
 import cn.hellopika.core.exception.BusinessException;
 import cn.hellopika.dao.entity.CmsPermissionEntity;
 import cn.hellopika.dao.mapper.CmsPermissionMapper;
+import cn.hellopika.dao.mapper.CmsRolePermissionMapper;
 import cn.hellopika.service.api.CmsPermissionService;
 import cn.hellopika.service.converter.CmsPermissionConverter;
 import cn.hellopika.service.dto.CmsPermissionDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import java.util.*;
@@ -18,12 +20,16 @@ public class CmsPermissionServiceImpl implements CmsPermissionService {
     @Autowired
     private CmsPermissionMapper cmsPermissionMapper;
 
+    @Autowired
+    private CmsRolePermissionMapper cmsRolePermissionMapper;
+
     @Override
     public void save(CmsPermissionDto dto) {
         cmsPermissionMapper.save(CmsPermissionConverter.CONVERTER.dtoToEntity(dto));
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void deleteById(Integer id) {
         // 删除权限之前先查询该权限是否有子权限
         List<CmsPermissionEntity> cmsPermissionEntities = cmsPermissionMapper.selectByParentId(id);
@@ -31,11 +37,14 @@ public class CmsPermissionServiceImpl implements CmsPermissionService {
             throw new BusinessException("只能删除底层权限");
         }
 
+        // 删除权限的同时删除 角色-权限 表中的记录
+        cmsRolePermissionMapper.deleteByPermissionId(id);
         // 删除权限
         cmsPermissionMapper.deleteById(id);
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void update(CmsPermissionDto dto) {
         cmsPermissionMapper.update(CmsPermissionConverter.CONVERTER.dtoToEntity(dto));
     }

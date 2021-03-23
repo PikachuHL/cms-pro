@@ -27,7 +27,7 @@
             </@form.inline>
         </@form.item>
 
-        <@form.item>
+        <@form.item class="permission">
             <@form.inline label="权限">
                 <div id="tree"></div>
             </@form.inline>
@@ -41,11 +41,22 @@
 <script>
     LayUtil.form.init(function (inner) {
         inner.submit(function (data) {
-            dtreeInner.getChecked(data.field, "permission");
+            if(data.field.all==="0"){
+                dtreeInner.getChecked(data.field, "permission");
+            }
             core.http({
                 url:"${adminPath}/role/add.do",
                 data: data.field
             })
+
+        });
+        // 添加 radio 事件监听，当角色拥有所有权限时，隐藏权限列表
+        inner.radio("permissionFilter", function (obj) {
+            if (obj.value==="0"){
+                $(".permission").show();
+            } else{
+                $(".permission").hide();
+            }
         })
     });
 
