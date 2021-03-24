@@ -1,8 +1,13 @@
 <#import "/layout/backend/main.ftl" as main>
 <#import "/layout/backend/form.ftl" as form>
+
+<link rel="stylesheet" href="${basePath}/admin/layui/layui_ext/dtree/dtree_select_tree.css">
+<link rel="stylesheet" href="${basePath}/admin/layui/layui_ext/dtree/font/dtreefont.css">
+
 <@main.layout>
     <@form.form>
         <input name="parentId" class="layui-input" type="hidden"<#if parentId??>value="${parentId}"</#if>>
+
         <@form.item>
             <@form.inline label="上级菜单">
                 <ul id="selectTree"></ul>
@@ -11,14 +16,17 @@
                 <input name="name" class="layui-input" type="text">
             </@form.inline>
         </@form.item>
+
         <@form.item>
             <@form.inline label="权限类型" required=true>
-                <@form.radio list=permissionType name="menu" value="1"></@form.radio>
+                <input name="menu" class="layui-input" type="radio" value="0" title="按钮">
+                <input name="menu" class="layui-input" type="radio" value="1" title="菜单">
             </@form.inline>
             <@form.inline label="菜单url">
                 <input name="url" class="layui-input" type="text">
             </@form.inline>
         </@form.item>
+
         <@form.item>
             <@form.inline label="权限标识">
                 <input name="action" class="layui-input" type="text">
@@ -27,6 +35,7 @@
                 <input name="icon" class="layui-input" type="text">
             </@form.inline>
         </@form.item>
+
         <@form.item>
             <@form.inline label="排序" required=true>
                 <input name="priority" class="layui-input" type="number">
@@ -36,9 +45,6 @@
         <@form.submit></@form.submit>
     </@form.form>
 </@main.layout>
-
-<link rel="stylesheet" href="${basePath}/admin/layui/layui_ext/dtree/dtree_select_tree.css">
-<link rel="stylesheet" href="${basePath}/admin/layui/layui_ext/dtree/font/dtreefont.css">
 
 <script>
     LayUtil.selectTree.init({

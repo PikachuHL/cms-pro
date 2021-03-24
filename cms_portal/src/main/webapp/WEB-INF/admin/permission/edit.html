@@ -14,7 +14,13 @@
         </@form.item>
         <@form.item>
             <@form.inline label="权限类型" required=true>
-                <@form.radio list=permissionType name="menu" value="${data.menu?string('1','0')}"></@form.radio>
+                <#if "${data.menu?string('1','0')}"=='0'>
+                    <input name="menu" class="layui-input" type="radio" value="0" title="按钮" checked>
+                    <input name="menu" class="layui-input" type="radio" value="1" title="菜单">
+                <#else>
+                    <input name="menu" class="layui-input" type="radio" value="0" title="按钮">
+                    <input name="menu" class="layui-input" type="radio" value="1" title="菜单" checked>
+                </#if>
             </@form.inline>
             <@form.inline label="菜单url">
                 <input name="url" class="layui-input" type="text" value="${data.url!}">
