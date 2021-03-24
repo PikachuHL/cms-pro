@@ -67,6 +67,7 @@ public class CmsAuthenticationFilter extends FormAuthenticationFilter {
         //获取验证码并执行验证
         String captcha = WebUtils.getCleanParam(request, "captcha");
         String verifyResult = commonService.verifyImageCaptcha(captcha);
+        // TODO delete 1>2
         if (1>2 && Objects.nonNull(verifyResult)) {
             writer.write(JSON.toJSONString(Result.failed(verifyResult)));
             return false;
@@ -101,8 +102,8 @@ public class CmsAuthenticationFilter extends FormAuthenticationFilter {
         String url = httpServletRequest.getRequestURI();
         // 获取登录ip
         String loginIp = UtilsHttp.getRemoteAddress();
-        // 获取SessionId
-        String sessionId = (String) UtilsShiro.getSession().getId();
+
+
         // 获取登录用户的信息
         CmsUserDto cmsUserDto = (CmsUserDto) subject.getPrincipal();
 
@@ -111,8 +112,6 @@ public class CmsAuthenticationFilter extends FormAuthenticationFilter {
             /**
              * 更新cms_user表
              */
-            cmsUserDto.setLastLoginIp(loginIp);
-            cmsUserDto.setSessionId(sessionId);
             cmsUserService.update(cmsUserDto);
             /**
              * 更新cms_log表

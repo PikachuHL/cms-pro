@@ -8,28 +8,34 @@
     <sql id="baseColumns">
         id,
         username,
-        status
+        status,
+        email,
+        password,
+        salt,
+        register_time
     </sql>
 
     <resultMap id="baseResultMap" type="cn.hellopika.dao.entity.CmsUserEntity">
         <id property="id" column="id"/>
         <result property="username" column="username"/>
         <result property="status" column="status"/>
+        <result property="eamil" column="eamil"/>
+        <result property="password" column="password"/>
+        <result property="salt" column="salt"/>
+        <result property="registerTime" column="register_time"/>
     </resultMap>
 
     <select id="findByUsername" resultMap="baseResultMap">
-        select <include refid="baseColumns"/> from cms_user where username=#{username} and deleted = 1
+        select <include refid="baseColumns"/> from cms_user where username=#{username} and is_delete = 1
+    </select>
+
+    <select id="selectAll" resultMap="baseResultMap">
+        select <include refid="baseColumns"/> from cms_user where is_delete = 1
     </select>
 
 
     <sql id="updateCondition">
         update_time = #{updateTime},
-        <if test="lastLoginIp!=null and lastLoginIp!=''">
-            last_login_ip = #{lastLoginIp},
-        </if>
-        <if test="sessionId!=null and sessionId!=''">
-            session_id = #{sessionId},
-        </if>
     </sql>
 
     <update id="update">
@@ -40,5 +46,16 @@
         </trim>
         where id = #{id}
     </update>
+
+    <select id="getPage" parameterType="cn.hellopika.dao.entity.CmsRoleEntity" resultMap="baseResultMap">
+        select
+        <include refid="baseColumns"/>
+        from cms_user
+        <where>
+            <if test="username!=null and username!=''">
+                username like concat('%', #{username}, '%')
+            </if>
+        </where>
+    </select>
 
 </mapper>

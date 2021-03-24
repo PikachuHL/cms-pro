@@ -4,6 +4,8 @@ import cn.hellopika.core.foundation.BaseEntity;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+
 /**
  * 用户附表的 entity
  */
@@ -11,12 +13,15 @@ import lombok.Setter;
 @Setter
 public class CmsUserEntity extends BaseEntity<Integer> {
     private String username;
-    private Integer status;
-    private Boolean admin;
-    private String lastLoginIp;
-    private String sessionId;
+    private Boolean status;
+    private String email;
+    private String password;
+    private String salt;
     /**
      * 超级管理员
      */
     private Boolean administrator;
+
+    private LocalDateTime registerTime;
+
 }

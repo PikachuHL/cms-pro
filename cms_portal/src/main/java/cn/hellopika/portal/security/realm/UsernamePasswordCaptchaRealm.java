@@ -1,10 +1,8 @@
 package cn.hellopika.portal.security.realm;
 
 import cn.hellopika.dao.enums.UserStatusEnum;
-import cn.hellopika.service.api.CmsUserPrimaryService;
 import cn.hellopika.service.api.CmsUserService;
 import cn.hellopika.service.dto.CmsUserDto;
-import cn.hellopika.service.dto.CmsUserPrimaryDto;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
@@ -18,9 +16,6 @@ public class UsernamePasswordCaptchaRealm extends AuthorizingRealm {
 
     @Autowired
     private CmsUserService cmsUserService;
-
-    @Autowired
-    private CmsUserPrimaryService cmsUserPrimaryService;
 
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
@@ -38,18 +33,13 @@ public class UsernamePasswordCaptchaRealm extends AuthorizingRealm {
             throw new UnknownAccountException();
         }
 
-        // 如果用户存在,判断用户状态(状态使用枚举展示)
-        if (UserStatusEnum.DISABLED.equals(cmsUserDto.getStatus())){
+        // 如果用户存在, 判断用户状态
+        if (!cmsUserDto.getStatus()) {
             throw new DisabledAccountException("用户被禁用, 请联系管理员");
-        }else if(UserStatusEnum.LOCKED.equals(cmsUserDto.getStatus())){
-            throw new LockedAccountException("用户被锁定, 请联系管理员");
         }
 
-        // 如果状态正常, 则从主表中通过 id 查找用户, 然后比对密码
-        CmsUserPrimaryDto cmsUserPrimaryDto = cmsUserPrimaryService.selectById(cmsUserDto.getId());
-
-        SimpleAuthenticationInfo simpleAuthenticationInfo = new SimpleAuthenticationInfo(cmsUserDto, cmsUserPrimaryDto.getPassword(),
-                ByteSource.Util.bytes(cmsUserPrimaryDto.getSalt()), getName());
+        SimpleAuthenticationInfo simpleAuthenticationInfo = new SimpleAuthenticationInfo(cmsUserDto, cmsUserDto.getPassword(),
+                ByteSource.Util.bytes(cmsUserDto.getSalt()), getName());
 
 //        super.clearCache(simpleAuthenticationInfo.getPrincipals());
 

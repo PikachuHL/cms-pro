@@ -49,12 +49,19 @@
           "icon": "fa fa-gears",
           "target": "_self"
         },
+
         {
           "title": "用户管理",
           "href": "",
           "icon": "fa fa-file-text",
           "target": "_self",
           "child": [
+            {
+              "title": "后台用户",
+              "href": "user/index.do",
+              "icon": "fa fa-list-alt",
+              "target": "_self"
+            },
             {
               "title": "角色管理",
               "href": "role/index.do",
@@ -69,6 +76,7 @@
             }
           ]
         },
+
         {
           "title": "表单示例",
           "href": "",

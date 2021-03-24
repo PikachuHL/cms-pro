@@ -4,7 +4,7 @@
     <@form.form>
         <@form.tableSearch>
             <div class="layui-inline">
-                <input name="name" type="text" class="layui-input" placeholder="输入角色名查询">
+                <input name="username" type="text" class="layui-input" placeholder="输入用户名查询">
             </div>
         </@form.tableSearch>
     </@form.form>
@@ -15,18 +15,18 @@
 <script>
     LayUtil.dataGrid.init({
         elem: '#dataGrid'
-        , url: '${adminPath}/role/page.do'
+        , url: '${adminPath}/user/page.do'
         , cellMinWidth: 80 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
         , cols: [[
             {field: 'id', title: 'ID', sort: true}
-            , {field: 'name', title: '角色名'}
-            , {field: 'all', title: '拥有所有权限', templet:function (data) {
-                    return data.all?'是':'否';
-                }}
-            , {field: 'status', title: '状态', templet:function (data) {
-                    return data.status?'禁用':'正常';
-                }}
-            , {field: 'priority', title: '排列顺序', sort: true}
+            , {field: 'username', title: '用户名'}
+            , {field: 'email', title: '邮箱'}
+            , {
+                field: 'status', title: '状态', templet: function (data) {
+                    return data.status ? '正常' : '禁用';
+                }
+            }
+            , {field: 'registerTime', title: '注册时间', sort: true}
             , {templet: '#rightTemplate', align: 'center', title: '操作'}
         ]]
         , toolbar: "#toolbar"
@@ -34,11 +34,11 @@
 </script>
 
 <script type="text/html" id="rightTemplate">
-    <a class="layui-btn layui-btn-primary layui-btn-xs" href="${adminPath}/role/edit.do?id={{d.id}}">修改</a>
+    <a class="layui-btn layui-btn-primary layui-btn-xs" href="${adminPath}/user/edit.do?id={{d.id}}">修改</a>
     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
 </script>
 <script type="text/html" id="toolbar">
-    <a class="layui-btn layui-btn-sm layui-bg-blue" href="${adminPath}/role/add.do"><i
+    <a class="layui-btn layui-btn-sm layui-bg-blue" href="${adminPath}/user/add.do"><i
                 class="layui-icon layui-icon-add-1"></i>添加</a>
     <a class="layui-btn layui-btn-sm" onclick="javascript:window.location.reload()"><i
                 class="layui-icon layui-icon-refresh-3"></i>刷新</a>
