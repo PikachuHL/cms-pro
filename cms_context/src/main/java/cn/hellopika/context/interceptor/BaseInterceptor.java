@@ -11,7 +11,8 @@ import java.time.LocalDateTime;
 import java.util.Properties;
 
 /**
- *  MyBatis 的插件类
+ *  MyBatis 的插件类，实现了公共字段统一赋值的功能
+ *  可以为 createTime 和 updateTime 赋值
  */
 
 @Intercepts(

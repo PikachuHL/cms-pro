@@ -68,7 +68,8 @@ VALUES (1, 'cms官网','cms,内容管理', 'cms内容管理系统');
 (
     create_time timestamp    not null default CURRENT_TIMESTAMP,
     update_time timestamp    not null default '0000-00-00 00:00:00',
-    id          int(11)      NOT NULL AUTO_INCREMENT primary key,
+
+    id          int(11)      not null AUTO_INCREMENT primary key,
     parent_id   int(11)      default 0 comment '父级id',
     is_menu     tinyint(1)   default 0 comment '是否菜单 0:否 1:是',
     icon        varchar(30)  default '' comment '菜单图标',
@@ -80,6 +81,12 @@ VALUES (1, 'cms官网','cms,内容管理', 'cms内容管理系统');
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8;
 
+  INSERT INTO cms_permission (CREATE_TIME, UPDATE_TIME, ID, PARENT_ID, IS_MENU, ICON, NAME, ACTION, URL, PRIORITY)
+  VALUES ('2021-01-01 08:00:00', NULL, 1, 0, 1, '', '权限1', '', '', 1);
+
+  INSERT INTO cms_permission (CREATE_TIME, UPDATE_TIME, ID, PARENT_ID, IS_MENU, ICON, NAME, ACTION, URL, PRIORITY)
+  VALUES ('2021-01-01 08:00:00', NULL, 2, 1, 0, '', '权限2', '', '', 2);
+
 
 -- ----------------------------
 --  Table structure for cms_role  角色表
@@ -88,13 +95,22 @@ CREATE TABLE cms_role
 (
     create_time timestamp               not null default CURRENT_TIMESTAMP,
     update_time timestamp               not null default '0000-00-00 00:00:00',
-    id          int(11)                 NOT NULL AUTO_INCREMENT primary key,
+    id          int(11)                 not null AUTO_INCREMENT primary key,
     name        varchar(50)             not null default '' comment '角色名称',
     priority    int        default '1'  not null comment '排列顺序',
     is_all      tinyint(1) default 0    not null comment '是否所有权限 0.否 1.是',
     status      tinyint(1) default 0    not null comment '状态 0:正常 1:禁用'
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8;
+
+  INSERT INTO cms_role (CREATE_TIME, UPDATE_TIME, ID, NAME, PRIORITY, IS_ALL, STATUS)
+  VALUES ('2021-01-01 08:00:00', NULL, 1, '角色1', 1, 0, 0);
+
+  INSERT INTO cms_role (CREATE_TIME, UPDATE_TIME, ID, NAME, PRIORITY, IS_ALL, STATUS)
+  VALUES ('2021-01-01 08:00:00', NULL, 2, '角色2', 2, 0, 0);
+
+  INSERT INTO cms_role (CREATE_TIME, UPDATE_TIME, ID, NAME, PRIORITY, IS_ALL, STATUS)
+  VALUES ('2021-01-01 08:00:00', NULL, 3, '角色3', 3, 0, 0);
 
 
 -- ----------------------------
@@ -104,6 +120,17 @@ CREATE TABLE cms_role_permission
 (
     role_id         int not null comment '角色id',
     permission_id   int not null comment '权限id'
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8;
+
+
+-- ----------------------------
+--  Table structure for cms_user_role  用户角色表
+-- ----------------------------
+CREATE TABLE cms_user_role
+(
+    user_id int not null comment '用户id',
+    role_id int not null comment '角色id'
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8;
 

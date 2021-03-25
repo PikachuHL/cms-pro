@@ -22,4 +22,6 @@ public class CmsUserDto extends BaseDto<Integer> {
     private Boolean administrator;
 
     private LocalDateTime registerTime;
+
+    private Integer roleId;
 }

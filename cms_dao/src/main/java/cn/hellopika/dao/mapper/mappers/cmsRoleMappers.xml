@@ -109,9 +109,13 @@
     </select>
 
     <select id="selectById" resultMap="baseMap">
-        select
-        <include refid="allColumn"/>
+        select <include refid="allColumn"/>
         from cms_role where id=#{id}
+    </select>
+
+    <select id="selectAll" resultMap="baseMap">
+        select <include refid="allColumn"/>
+        from cms_role
     </select>
 
 </mapper>

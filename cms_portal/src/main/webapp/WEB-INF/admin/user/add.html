@@ -1,0 +1,83 @@
+<#import "/layout/backend/main.ftl" as main>
+<#import "/layout/backend/form.ftl" as form>
+<link rel="stylesheet" href="${basePath}/admin/layui/layui_ext/dtree/dtree_tree.css">
+<link rel="stylesheet" href="${basePath}/admin/layui/layui_ext/dtree/font/dtreefont.css">
+<@main.layout>
+    <@form.form>
+
+        <@form.item>
+            <@form.inline label="用户名" required=true>
+                <input name="username" class="layui-input" type="text" lay-verify="required|username" placeholder="请输入用户名">
+            </@form.inline>
+        </@form.item>
+
+        <@form.item>
+            <@form.inline label="密码" required=true>
+                <input name="password" class="layui-input" type="text" lay-verify="required|password" placeholder="请输入6-18位密码">
+            </@form.inline>
+        </@form.item>
+
+        <@form.item>
+            <@form.inline label="确认密码" required=true>
+                <input name="confirmPassword" class="layui-input" type="text" lay-verify="required|confirmPassword" placeholder="请再次输入密码">
+            </@form.inline>
+        </@form.item>
+
+        <@form.item>
+            <@form.inline label="邮箱" required=true>
+                <input name="email" class="layui-input" type="text" lay-verify="required|email" placeholder="请输入邮箱">
+            </@form.inline>
+        </@form.item>
+
+        <form.item>
+            <@form.inline label="状态">
+                <input name="status" class="layui-input" type="radio" value="0" title="禁用" >
+                <input name="status" class="layui-input" type="radio" value="1" title="正常" checked>
+            </@form.inline>
+        </form.item>
+
+        <@form.item>
+            <@form.inline label="角色" fullLine=true>
+                <#list roles as item>
+                    <input type="radio" name="roleId" title="${item.name}" value="${item.id}">
+                </#list>
+            </@form.inline>
+        </@form.item>
+
+        <@form.submit></@form.submit>
+
+    </@form.form>
+</@main.layout>
+
+
+<script>
+    LayUtil.form.init(function (inner) {
+
+        // 前端验证
+        inner.verify({
+            username:function (usernameVal) {
+                if(!new RegExp(/^(?![_]+$)\w{5,10}$/).test(usernameVal)){
+                    return "用户名必须是5-10位，可包括 字母、数字、下划线";
+                }
+            },
+            password:function (passwordVal) {
+                if(!new RegExp(/^(?![\d]+$)(?![a-zA-Z]+$)(?![^\da-zA-Z]+$).{7,15}$/).test(passwordVal)){
+                    return "密码必须是6-18位，至少包括字母、数字、符号其中的两种";
+                }
+            },
+            confirmPassword:function (confirmPasswordVal) {
+                let passwordVal = $("input[name='password']").val();
+                if (confirmPasswordVal !== passwordVal){
+                    return "两次输入密码不一致";
+                }
+            }
+        });
+        inner.submit(function (data) {
+            core.http({
+                url:"${adminPath}/user/add.do",
+                data: data.field
+            })
+        })
+    });
+
+</script>

@@ -5,64 +5,12 @@
 
 <mapper namespace="cn.hellopika.dao.mapper.CmsRolePermissionMapper">
 
-    <!-- 新增的 列 -->
-    <sql id="column">
-        role_id,
-        permission_id
-    </sql>
-
-    <sql id="updateColumn">
-        update_time = #{updateTime},
-        <if test="parentId != null">
-            parent_id = #{parentId},
-        </if>
-
-        <if test="icon != null and icon != ''">
-            icon = #{icon},
-        </if>
-
-        <if test="menu != null">
-            is_menu = #{menu},
-        </if>
-
-        <if test="action!=null and action != ''">
-            action = #{action},
-        </if>
-
-        <if test="url != null and url != ''">
-            url = #{url},
-        </if>
-        name = #{name},
-        priority = #{priority}
-    </sql>
-
-    <!-- 查询的所有列 -->
-    <sql id="allColumn">
-        id, parent_id, is_menu, icon, name, action, url, priority
-    </sql>
-
-    <resultMap id="baseMap" type="cn.hellopika.dao.entity.CmsPermissionEntity">
-        <id column="id" property="id"/>
-        <result column="parent_id" property="parentId"/>
-        <result column="is_menu" property="menu"/>
-        <result column="icon" property="icon"/>
-        <result column="name" property="name"/>
-        <result column="action" property="action"/>
-        <result column="url" property="url"/>
-        <result column="priority" property="priority"/>
-    </resultMap>
-
-
     <insert id="batchInsert">
-        insert into cms_role_permission (<include refid="column"/>) values
+        insert into cms_role_permission (role_id, permission_id) values
         <foreach collection="permissionList" item="item" separator=",">
             (#{roleId},#{item})
         </foreach>
     </insert>
-
-    <update id="update">
-        update cms_permission set <include refid="updateColumn"/> where id=#{id}
-    </update>
 
     <delete id="deleteByPermissionId">
         delete from cms_role_permission where permission_id=#{permissionId}

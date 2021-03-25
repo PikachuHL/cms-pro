@@ -26,6 +26,10 @@ public class CmsRoleServiceImpl implements CmsRoleService {
     @Autowired
     private CmsRolePermissionMapper cmsRolePermissionMapper;
 
+    /**
+     * 添加角色
+     * @param dto
+     */
     @Override
     @Transactional(rollbackFor = Exception.class)  // 添加事务，有任何异常都回滚
     public void save(CmsRoleDto dto) {
@@ -41,6 +45,10 @@ public class CmsRoleServiceImpl implements CmsRoleService {
 
     }
 
+    /**
+     * 删除角色
+     * @param id
+     */
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void deleteById(Integer id) {
@@ -50,13 +58,19 @@ public class CmsRoleServiceImpl implements CmsRoleService {
         cmsRoleMapper.deleteById(id);
     }
 
+    /**
+     * 更新角色
+     * @param dto
+     */
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void update(CmsRoleDto dto) {
         CmsRoleEntity cmsRoleEntity = CmsRoleConverter.CONVERTER.dtoToEntity(dto);
         cmsRoleMapper.update(cmsRoleEntity);
 
-        // 当角色没有全部权限的时候，把角色和权限的关系插入 角色-权限 中间表
+        // 往 角色-权限 中间表添加信息
+        // 添加信息之前，先把中间表中该角色的相关记录删除
+        cmsRolePermissionMapper.deleteByRoleId(dto.getId());
         if (!dto.getAll()) {
             if (Objects.nonNull(dto.getPermission())) {
                 cmsRolePermissionMapper.batchInsert(dto.getPermission(), cmsRoleEntity.getId());
@@ -72,7 +86,7 @@ public class CmsRoleServiceImpl implements CmsRoleService {
 
     @Override
     public List<CmsRoleDto> selectAll() {
-        return null;
+        return CmsRoleConverter.CONVERTER.entityToDto(cmsRoleMapper.selectAll());
     }
 
     @Override
